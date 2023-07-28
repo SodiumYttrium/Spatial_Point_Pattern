@@ -1,0 +1,213 @@
+---
+title: "Testing for CSR"
+author: "Natalie Young"
+date: "2023-07-22"
+categories: [news, code, analysis]
+image: "image.jpg"
+bibliography: ../../references.bib
+link-citations: TRUE
+draft: true
+---
+
+Now we will investigate some CSR tests, with the help of the `spatstat` package in RStudio.
+
+# Inter-event distances
+
+Our first method would be based on the distances between each pair of distinct events.
+We denote the distance between events $i$ and $j$ as $t_{ij}$. For $n$ events, there
+are $\frac{1}{2}n(n-1)$ distinct pairs of events in total.
+
+Now we define the distribution function of the distances, $t$, for CSR. For a unit square:
+$$
+H(t) =
+\begin{cases}
+\pi t^2 - \frac{8}{3}t^3 + \frac{1}{2}t^4 & \text{if } & 0\leq t\leq 1 \\
+\frac{1}{3} - 2t^2 - \frac{1}{2}t^4 + \frac{4}{3}(t^2 - 1)^\frac{1}{2}(2t^2 + 1)
++ 2t^2\sin^{-1}(2t^{-2}-1) & \text{if } & 1 < t\leq \sqrt{2} \\
+\end{cases}
+$$
+And for a circle of unit radius:
+$$
+H(t) = 1+\pi^{-1}\{2(t^2-1)\cos^{-1}(\frac{t}{2}) - t(1+\frac{t^2}{2})\sqrt{1-\frac{t^2}{4}}\}
+$$
+for all $0 \leq t \leq 2$. Indeed, $H(t)$ varies depending on the size and shape of
+the sampling region $A$.
+
+Assume that $H(t)$ for the region in interest is known. We then calculate the
+empirical distribution function (EDF):
+$$
+\hat{H}_1(t) = \{\frac{1}{2}n(n-1)\}^{-1} \#(t_{ij} \leq t)
+$$
+where $\#(t_{ij} \leq t)$ means the number of observed distances that are at most $t$.
+
+Next, we simulate $n$ events under CSR $s-1$ times. From these we obtain $\hat{H}_i(t)$
+for $i=2, 3, \dots, s$. Hereby we obtain the upper and lower envelopes:
+$$
+U(t)= \text{max}\{\hat{H}_i(t)\}; \space L(t)= \text{min}\{\hat{H}_i(t)\}
+$$
+$\hat{H}_1(t), U(t)$ and $L(t)$ can be plotted against $H(t)$. If $\hat{H}_1(t)$ lies close
+to $H(t)$ and is between $U(t)$ and $L(t)$ throughout the range, we may accept CSR.
+
+My replication of Diggle's plot on Japanese black pine saplings, using 99 simulations
+of CSR for the envelopes, affirms acceptance of CSR. This agrees with [@Bartlett] and
+[@Besag], who used a $\chi^2$ test on a histogram of inter-event distances.
+
+```{r}
+library(spatstat)
+library(attention)
+
+jpp <- japanesepines
+
+n <- 65
+pd <- pairdist(jpp, periodic=FALSE, method="C", squared=FALSE, metric=NULL)
+
+Hhat = function(t){sum(pd[lower.tri(pd)] <= t) / (n*(n-1)/2)}
+H = function(t){
+  if (0 <= t && t <= 1) {
+    pi*t^2 - 8/3*t^3 + t^4/2
+  } else if (1 < t && t <= 1.42) {
+    1/3 - 2*t^2 - t^4/2 + 4*(t^2 - 1)^(1/2)*(2*t^2 + 1)/3 +2*t^2*asin(2*t^(-2) - 1)
+  }
+}
+
+dist <- seq(from = 0, to = 1.42, by = 0.01)
+
+H_apply <- lapply(dist, H)
+Hhat_apply <- lapply(dist, Hhat)
+
+pdlist <- vector("list", length = length(dist))
+pdmat <- matrix(nrow = 99, ncol = length(dist))
+for (i in 1:99) {
+  pts <- runifpoint(n, win=window(jpp))
+  pds <- pairdist(pts, periodic=FALSE, method="C", squared=FALSE, metric=NULL)
+  pdsvec <- pds[lower.tri(pds)]
+  for (t in dist) {
+    pdmat[i, which(dist == t)] <- sum(pdsvec <= t)
+  }
+}
+ulist <- RowMax(t(pdmat))
+llist <-apply(pdmat, 2, min, simplify = TRUE)
+U <- lapply(ulist, function(t) t/((n*(n-1))/2))
+L <- lapply(llist, function(t) t/((n*(n-1))/2))
+
+
+plot(H_apply, Hhat_apply, col='green', type='l')
+lines(H_apply, U, col='red')
+lines(H_apply, L, col='cyan')
+legend(x=0,y=1,c("data","upper envelope", "lower envelope"),cex=.8,col=c("green","red", "cyan"),pch=c(1,2,3))
+```
+
+## Monte Carlo test
+
+2 ways to construct an exact Monte Carlo test for CSR are as below:
+
+i) Choose $t_0$ and let $u_i = \hat{H}_i(t_0)$. The rank of $u_1$ is a basis for the
+test as under CSR, all rankings of $u_1$ are equally probable.
+
+ii) Define $u_i$ to be a measure of variation between $\hat{H}_i(t)$ and $H(t)$, e.g.
+$u_i = \int \{\hat{H}_i(t)-H(t)\}^2 \space dt$, then base the test on the rank of $u_1$.
+
+For (i), we would need to choose a sensible $t_0$ for the problem. While (ii) is more
+objective, it may not be a powerful test for inter-event distances.
+
+For a region A in which $H(t)$ is unknown, we can replace it by:
+$$
+\bar{H}_i(t) = \frac{\displaystyle \sum_{j \ne i}\hat{H}_j(t)}{s-1}
+$$
+While $u_i$ under CSR is no longer independent, it still fulfills the requirement that
+all rankings of $u_1$ are equi-probable, as they are inter-changeable. We can plot
+$U(t), \space L(t)$ and $\hat{H}_1(t)$ against $\bar{H}_1(t)$. Since $\bar{H}_1(t)$
+only depends on simulations of CSR, it is an unbiased estimate of H(t).
+
+# Nearest neighbour distances
+
+Our second method is measuring the distances to the closest neighbour from each event. For
+situations in which events interact with each other on a small physical scale, such as
+trees competing for sunlight and nutrients within a small relative area, we can focus on
+'small' inter-event distances when a precise threshold distance is hard to specify.
+
+Let $y_i$ be the closest neighbour distance of the $i$th event. Define the EDF:
+$$
+\hat{G}_1(y) = \frac{1}{n}\#(y_i \leq y)
+$$
+The theoretical distribution of $y$ under CSR depends on $n$ and the region $A$.
+With $|A|$ being the area of the region, the probability of an arbitrary event is
+within distance $y$ of another specified event is $\frac{\pi y^2}{|A|}$, i.e. the
+area of a circle with radius $y$ over the area of $A$. Since the events are located
+independently, the approximate distribution of $y$ is:
+$$
+G(y) = 1 - (1 - \frac{\pi y^2}{|A|})^{n-1}
+$$
+For a large $n$, let $\lambda = \frac{n}{|A|}$. The approximation is:
+$$
+G(y) = 1 - exp(-\lambda \pi y^2): \space y \geq 0
+$$
+
+## Monte Carlo test
+
+Possible test statistics for the Monte Carlo test could be $\bar{y}$, the sample mean
+of the nearest distances, or
+$$
+u_i = \int \{\hat{G}_i(y)-\bar{G}_i(y)\}^2 \space dy,
+$$
+where
+$$
+\bar{G}_i(y) = \frac{1}{s-1}  \displaystyle\sum_{j \ne i} \hat{G}_j(y)
+$$
+An advantage of using $\bar{y}$ is that simulation is unnecessary. As shown by
+Donnelly(1978), $\bar{y}$ under CSR is Normally distributed, with mean and variance:
+$$
+E(\bar{y}) = 0.5(\frac{n}{|A|})^{1/2} + \frac{1}{n}(0.051+0.042n^{-1/2})P
+$$
+and
+$$
+Var(\bar{y}) = 0.070n^{-2}|A|+0.037(n^{-5}|A|)^{1/2}P
+$$
+where P is the perimeter of region A. Significantly small or large \bar{y}
+suggests aggregation or regularity, respectively.
+
+# Point to nearest event distances
+
+The third method uses the distances between the $m$ arbitrary sample points to the
+nearest of the $n$ events. Let $x_i$ be such distances, and our EDF would be:
+$$
+\hat{F}(x) = \frac{1}{m} \#(x_i \leq x)
+$$
+This EDF would measure the empty spaces in region A, where $1-\hat{F}(x)$ would be
+approximately equal to the area of space in region A that is at least distance $x$
+away from any event.
+
+Similar to how the approximation of $G(y)$ for large $n$ was derived, under CSR,
+the approximation of $F(x)$ is as follows:
+$$
+F(x) = 1-exp(-\lambda \pi x^2): \space x \geq 0
+$$
+where $\lambda = \frac{n}{|A|}$, once again.
+
+# Quadrat counts
+
+We have looked into 3 different methods for CSR testing based on distances. Instead of
+measuring distances, we may divide the observed region $A$ into equally sized *quadrats*,
+and take counts of events in each quadrat.
+
+Under CSR, the expected number of events in each quadrat should be equal. We can perform
+the $\chi^2$ goodness-of-fit test, obtaining the test statistic from  Pearson's
+criterion,
+$$
+X^2 = \displaystyle\sum_{i=1}^m \frac{(n_i - \bar{n})^2}{\bar{n}}
+$$
+Its null distribution is $\chi_{m-1}^2$, provided that $\bar{n}$ is not too small and
+that each $x_i$ is at least 5. If $P(\chi_{m-1}^2 > X^2)$ is less than the significance level,
+we may reject CSR.
+
+For the data set of Japanese black pine saplings, we may use a $3 \times 3$ grid to
+ensure that the expected frequencies are at least 5. Below is the observation:
+```{r}
+quadrats <- quadratcount(jpp, nx = 3, ny = 3)
+quadrats
+```
+To perform the $\chi^2$ test, we may employ the `quadrat.test` function:
+```{r}
+quadrat.test(jpp, nx=3, ny=3)
+```
+Here we observe that the p-value is 0.1119, so evidence against CSR is weak.

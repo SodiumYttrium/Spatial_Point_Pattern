@@ -1,0 +1,54 @@
+---
+title: "Second Moments and Nearest Neighbour Distribution"
+author: "Natalie Young"
+date: "2023-07-27"
+categories: [news, analysis]
+bibliography: ../../references.bib
+link-citations: TRUE
+draft: true
+---
+
+This week we will explore some theoretical summary descriptions of
+spatial point processes. First, we need to define some notations.
+
+E($X$) = expectation of a random variable $X$
+$N(A)$ = number of events in the planar region $A$
+$N_j(A)$ = number of type $j$ events in $A$ for a multivariate process
+$|A|$ = area of $A$
+$dx$ = an infinitesimal region that contains the point $x$
+$\|x-y\|$ = the Euclidean distance between the points $x$ and $y$
+
+# Second order properties
+First-order properties are described by an intensity function,
+$$
+\lambda (x) = \lim_{|dx|\rightarrow 0} \{\frac{E[N(dx)]}{|dx|}\}
+$$
+For a *stationary* process, i.e. a process with all properties invariant under translation,
+$\lambda(x)$ is a constant, representing the mean number of events per unit area.
+
+The second-order intensity function is defined as,
+$$
+\lambda_2(x, y) = \lim_{|dx|, |dy|\rightarrow 0}\{\frac{E[N(dx)N(dy)]}{|dx||dy|}\}
+$$
+We also note that the *conditional intensity* is $\lambda_c(x|y)=\lambda_2(x, y)/\lambda(y)$,
+the intensity at point $x$ given there is an event at point $y$. If the process is stationary,
+$\lambda_2(x, y) \equiv \lambda_2(x-y)$. If the process is additionally isotropic, i.e.
+all process properties are invariant under rotation, we can reduce $\lambda_2(x-y)$ to
+$\lambda_2(t)$, with $t=\|x-y\|$.
+
+The *pair correlation function* is defined as $\rho(t)=\lambda_2(t)/\lambda^2$. For
+*intensity-reweighted (second-order) stationary processes*,
+$$
+\frac{\lambda_2(x,y)}{\lambda(x)\lambda(y)} = \rho(t)
+$$
+only depends on $t=\|x-y\|$.
+
+# The K function
+The K function also characterises second-order properties of a stationary, isotropic process.
+It is defined as the following:
+$$
+K(t) = \frac{E[N_0(t)]}{\lambda}
+$$
+where $N_0(t)$ is the number of other events taking place within distance $t$ of
+an arbitrary event. In order to link $K(t)$ and $\lambda_2(t)$, we will assume that
+multiple events cannot occur at the same point, $E[N(dx)] \sim P\{N(dx) = N(dy)=1\}$.

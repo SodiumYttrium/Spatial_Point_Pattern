@@ -1,0 +1,77 @@
+---
+title: "Introduction"
+author: "Natalie Young"
+date: "2023-07-13"
+categories: [news]
+bibliography: ../../references.bib
+link-citations: TRUE
+draft: false
+---
+
+Welcome! This week I have reviewed some introductory materials to the topic of Spatial Point Patterns.
+Here is a summary of them.
+
+A spatial point pattern refers to data which is irregularly distributed over a spatial region,
+such as the location of trees in an area. We denote these points as *events*. The
+positions of these events are assumed to follow an underlying process, which we aim to
+determine. For plant ecology, it is common to collect data by dividing the area into
+a regular grid of *quadrats* and take the count of each quadrat. An alternative method is
+to record the distances between a point and the neighbouring events. Both of these
+methods are considered *sparse sampling methods*.
+
+## Complete Spatial Randomness (CSR)
+
+Complete spatial randomness (CSR), also known as the *homogeneous Poisson point process*, implies that:
+
+(i) For a planar region $A$, with area $|A|$, the number of events is Poisson
+distributed with mean $\lambda |A|$. $\lambda$, the intensity, is the mean number of events
+per unit area. As the value of intensity remains constant over the whole region,
+it is a homogeneous process.
+
+(ii) Events are independent from each other and their locations are uniformly distributed
+over region A.
+
+While it may be impossible to achieve CSR in practice, tests of CSR may be helpful for
+formulating ecologically interesting hypotheses of patterns and distinguishing between 'regular' and
+'aggregated' data.
+
+## Dirichlet tessellation and Delaunay Triangulation
+
+Dirichlet tessellation: Given $n$ distinct events in a planar region A, we assign a 'territory' for each event
+so that for all points in a territory, the corresponding event is the closest event.
+Events with neighbouring territories are called *continguous*.
+
+Delaunay triangulation: Join up pairs of distinct events to form a triangularisation over the area. By
+taking perpendicular bisectors of these lines we can perform the Dirichlet tessellation.
+
+For some location-specific covariates measured at each event, such as temperature and elevation,
+we can estimate the values of these covariates at other locations by considering
+the vertices of the triangle that they lie in. Each vertex will contribute to the value of
+the covariate proportionally to its angle.
+
+## Monte Carlo Tests
+
+Monte Carlo tests were introduced by Barnard (1963). They are used when the underlying distribution of random variables is unknown, to estimate the parameters based on simulations.
+
+We can use them to test for CSR [@Besag], with the null hypothesis
+stating that events are uniformly and independently distributed across region A.
+One popular test statistic, proposed by Clarke and Evans (1954), is the sum of distances between each of the
+n events to its nearest neighbour. We denote this as $u_1$. Relatively large values of $u_1$ may
+indicate spatial regularity.
+
+An alternative test statistic used by Bartlett (1964) was the distribution function of
+distances between 2 randomly chosen points on the given square. The observed frequencies of
+inter-tree distances were then compared with the expected values under CSR, using
+$\chi^2$ goodness-of-fit tests. According to
+Bartlett, Besag and Diggle, there was insufficient evidence to reject the null hypothesis
+of CSR. However, there was a dependence between inter-tree measurements with a common end-point
+which may invalidate the obvious conclusion.
+
+<!-- Simple Monte Carlo Tests for Spatial Pattern -->
+<!-- Julian Besag, Peter J. Diggle -->
+<!-- Journal of the Royal Statistical Society. Series C (Applied Statistics), Vol. 26, No. 3 (1977), pp. 327-333 (7 pages) -->
+<!-- https://doi.org/10.2307/2346974 -->
+<!-- . -->
+
+<!-- https://www.jstor.org/stable/2346974 -->
+<!-- ![](thumbnail.jpg) -->

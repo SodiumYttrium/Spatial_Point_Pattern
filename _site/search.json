@@ -1,0 +1,44 @@
+[
+  {
+    "objectID": "posts/Introduction/index.html",
+    "href": "posts/Introduction/index.html",
+    "title": "Introduction",
+    "section": "",
+    "text": "Welcome! This week I have reviewed some introductory materials to the topic of Spatial Point Patterns. Here is a summary of them.\nA spatial point pattern refers to data which is irregularly distributed over a spatial region, such as the location of trees in an area. We denote these points as events. The positions of these events are assumed to follow an underlying process, which we aim to determine. For plant ecology, it is common to collect data by dividing the area into a regular grid of quadrats and take the count of each quadrat. An alternative method is to record the distances between a point and the neighbouring events. Both of these methods are considered sparse sampling methods."
+  },
+  {
+    "objectID": "posts/Introduction/index.html#complete-spatial-randomness-csr",
+    "href": "posts/Introduction/index.html#complete-spatial-randomness-csr",
+    "title": "Introduction",
+    "section": "Complete Spatial Randomness (CSR)",
+    "text": "Complete Spatial Randomness (CSR)\nComplete spatial randomness (CSR), also known as the homogeneous Poisson point process, implies that:\n\nFor a planar region \\(A\\), with area \\(|A|\\), the number of events is Poisson distributed with mean \\(\\lambda |A|\\). \\(\\lambda\\), the intensity, is the mean number of events per unit area. As the value of intensity remains constant over the whole region, it is a homogeneous process.\nEvents are independent from each other and their locations are uniformly distributed over region A.\n\nWhile it may be impossible to achieve CSR in practice, tests of CSR may be helpful for formulating ecologically interesting hypotheses of patterns and distinguishing between ‘regular’ and ‘aggregated’ data."
+  },
+  {
+    "objectID": "posts/Introduction/index.html#dirichlet-tessellation-and-delaunay-triangulation",
+    "href": "posts/Introduction/index.html#dirichlet-tessellation-and-delaunay-triangulation",
+    "title": "Introduction",
+    "section": "Dirichlet tessellation and Delaunay Triangulation",
+    "text": "Dirichlet tessellation and Delaunay Triangulation\nDirichlet tessellation: Given \\(n\\) distinct events in a planar region A, we assign a ‘territory’ for each event so that for all points in a territory, the corresponding event is the closest event. Events with neighbouring territories are called continguous.\nDelaunay triangulation: Join up pairs of distinct events to form a triangularisation over the area. By taking perpendicular bisectors of these lines we can perform the Dirichlet tessellation.\nFor some location-specific covariates measured at each event, such as temperature and elevation, we can estimate the values of these covariates at other locations by considering the vertices of the triangle that they lie in. Each vertex will contribute to the value of the covariate proportionally to its angle."
+  },
+  {
+    "objectID": "posts/Introduction/index.html#monte-carlo-tests",
+    "href": "posts/Introduction/index.html#monte-carlo-tests",
+    "title": "Introduction",
+    "section": "Monte Carlo Tests",
+    "text": "Monte Carlo Tests\nMonte Carlo tests were introduced by Barnard (1963). They are used when the underlying distribution of random variables is unknown, to estimate the parameters based on simulations.\nWe can use them to test for CSR (Besag and Diggle 1977), with the null hypothesis stating that events are uniformly and independently distributed across region A. One popular test statistic, proposed by Clarke and Evans (1954), is the sum of distances between each of the n events to its nearest neighbour. We denote this as \\(u_1\\). Relatively large values of \\(u_1\\) may indicate spatial regularity.\nAn alternative test statistic used by Bartlett (1964) was the distribution function of distances between 2 randomly chosen points on the given square. The observed frequencies of inter-tree distances were then compared with the expected values under CSR, using \\(\\chi^2\\) goodness-of-fit tests. According to Bartlett, Besag and Diggle, there was insufficient evidence to reject the null hypothesis of CSR. However, there was a dependence between inter-tree measurements with a common end-point which may invalidate the obvious conclusion."
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "I am Natalie Young, an undergraduate Mathematics student at Imperial College London. I will be updating this blog weekly to record my research on spatial point process and its applications in Ecology, guided by Statistical Analysis of Spatial and Spatio-temporal Point Patterns by P. J. Diggle. (Diggle 2013)\nPoint process models are a stochastic model to describe the locations of localised events in space, time or both. In particular, we will apply it to the distribution of different tree species over a 50ha tropical rainforest site on Barro Colorado Island, Panama. The ecological data for this site is publicly available, courtesy of the Smithsonian Tropical Research Institute.\n\n\n\nReferences\n\nDiggle, Peter J. 2013. Statistical Analysis of Spatial and Spatio-Temporal Point Patterns, Third Edition. Hoboken : Taylor; Francis."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "UROP_blog",
+    "section": "",
+    "text": "Introduction\n\n\n\n\n\n\n\nnews\n\n\n\n\n\n\n\n\n\n\n\nJul 13, 2023\n\n\nNatalie Young\n\n\n\n\n\n\nNo matching items"
+  }
+]
