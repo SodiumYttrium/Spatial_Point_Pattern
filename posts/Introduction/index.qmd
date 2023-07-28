@@ -33,7 +33,7 @@ over region A.
 
 While it may be impossible to achieve CSR in practice, tests of CSR may be helpful for
 formulating ecologically interesting hypotheses of patterns and distinguishing between 'regular' and
-'aggregated' data.
+'aggregated' data. 
 
 ## Dirichlet tessellation and Delaunay Triangulation
 
