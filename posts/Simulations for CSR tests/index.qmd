@@ -1,0 +1,354 @@
+---
+title: "Simulations for CSR Tests"
+author: "Natalie Young"
+date: "2023-07-28"
+categories: [code, analysis]
+bibliography: ../../references.bib
+link-citations: TRUE
+draft: false
+---
+```{r, message=FALSE, warning=FALSE, echo=FALSE}
+library(spatstat)
+```
+
+This post will be a collection of simulations I made based on the materials from
+the post 'Testing for CSR'. The data I will be using are:
+
+- Locations of 65 Japanese black pine saplings in a square of side-length 5.7
+metres [@Numata]
+
+```{r, echo=FALSE}
+plot(japanesepines)
+```
+
+- Locations of 62 redwood seedlings in a square of side-length 23 metres
+[@Strauss; @MSP]
+
+```{r, echo=FALSE}
+plot(redwood3)
+```
+
+- Locations of 42 cell centres in a unit square [@MSP]
+
+```{r, echo=FALSE}
+plot(cells)
+```
+
+- Locations of 3604 trees of the species Beilschmiedia pendula (Lauraceae) in a 1000 by 500 metre rectangular sampling region in the tropical rainforest of Barro Colorado Island [@HF;@CHF;@Condit]
+
+```{r, echo=FALSE}
+plot(bei)
+```
+
+The first 3 have been used for demonstration in Diggle's book, and my plots indeed show
+similar results to Diggle's.
+
+# Inter-event distances
+
+```{r, echo=FALSE}
+Hfunc <- function(data, dist){
+  n <- data$n
+  pd <- pairdist(data, periodic=FALSE, method="C", squared=FALSE, metric=NULL)
+  Hhat = function(t){sum(pd[lower.tri(pd)] <= t) / (n*(n-1)/2)}
+  
+  Hhat_apply <- lapply(dist, Hhat)
+  
+  pdlist <- vector("list", length = length(dist))
+  pdmat <- matrix(nrow = 99, ncol = length(dist))
+  for (i in 1:99) {
+    pts <- runifpoint(n, win=window(data))
+    pds <- pairdist(pts, periodic=FALSE, method="C", squared=FALSE, metric=NULL)
+    pdsvec <- pds[lower.tri(pds)]
+    for (t in dist) {
+      pdmat[i, which(dist == t)] <- sum(pdsvec <= t)
+    }
+  }
+  
+  Hbar <- apply(pdmat, 2, mean) / (n*(n-1)/2)
+  
+  ulist <- apply(pdmat, 2, max, simplify = TRUE)
+  llist <-apply(pdmat, 2, min, simplify = TRUE)
+  U <- lapply(ulist, function(t) t/((n*(n-1))/2))
+  L <- lapply(llist, function(t) t/((n*(n-1))/2))
+  
+  plot(Hbar, Hhat_apply, col='green', type='l', xlab='H(t)')
+  lines(Hbar, U, col='red')
+  lines(Hbar, L, col='cyan')
+  legend(x=0,y=1,c("data","upper envelope", "lower envelope"),cex=.8,col=c("green","red", "cyan"),pch=c(1,2,3))
+}
+```
+## Japanese black pines
+My replication of Diggle's plot on Japanese black pine saplings, using 99 simulations
+of CSR for the envelopes, affirms acceptance of CSR. This agrees with [@Bartlett] and
+[@Besag], who used a $\chi^2$ test on a histogram of inter-event distances.
+
+```{r, echo=FALSE}
+Hfunc(japanesepines, seq(from = 0, to = 1.42, by = 0.01))
+```
+
+## Redwood
+$\hat{H}_1(t)$ is greater than $H(t)$ throughout the range, especially for very small and very
+large values of $H(t)$, where $\hat{H}_1(t)$ exceeds the upper envelope. The excess
+number of small values of $H(t)$ may be explained by Strauss' remark that a distance of
+6 feet on the ground ($t \approx 0.08$), was "very roughly the range at which
+a pair of seedlings could interact."
+
+A formal test of significance based on the measure of the discrepancy between
+$\hat{H}_1(t)$ and $H(t)$, however, might suggest acceptance of CSR with a significance
+level of 0.22, according to Diggle. Indeed, $\hat{H}_1(t)$ lies relatively close to $H(t)$
+throughout the range. This shows that observation of the EDF plot with the simulation
+envelopes may provide insights that formal tests of significance do not.
+
+```{r, echo=FALSE}
+Hfunc(redwood3, seq(from = 0, to = 1.42, by = 0.01))
+```
+
+## Cells
+Again, a formal test of significance may suggest acceptance of CSR, with a significance
+level of 0.23. However with parts of the graph (especially at low values of $H(t)$)
+lying outside the simulation envelopes, it suggests otherwise. Note that for small values of $t$,
+$\hat{H}_1(t)=0$, i.e. small inter-event distances are absent. This explains the regularity
+of the pattern. Also, for large values of $t$, $\hat{H}_1(t)$ lies close to the upper
+envelope. Looking at the graph depicting the data, we can observe that there are no
+events present at the corners of the square. These empty spaces result in lack of
+large inter-event distances.
+
+```{r, echo=FALSE}
+Hfunc(cells, seq(from = 0, to = 1.42, by = 0.01))
+```
+
+## Beilschmiedia pendula (Lauraceae)
+Clearly, with the excess of small inter-event distances and the deficit of larger
+inter-event distances, we have sufficient evidence to reject CSR. This is to be expected,
+as we see from the graph that events are clustered around certain areas, with large
+empty spaces near the middle part of the region and to the right.
+
+```{r, echo=FALSE}
+knitr::include_graphics("bei_H.jpg")
+```
+
+# Nearest neighbour distance
+
+```{r, echo=FALSE}
+Gfunc <- function(data, dist){
+  n <- data$n
+  Y <- vector("list", length = n)
+  pd <- pairdist(data, periodic=FALSE, method="C", squared=FALSE, metric=NULL)
+  for (i in 1:n) {
+    Y[[i]] <- min(pd[i, -i])
+  }
+  A <- area(window(data))
+  G  = function(y){1 - (1 - pi*y^2/A)^(n-1)}
+  Ghat = function(y){sum(Y <= y)/n}
+  G_apply <- lapply(dist, G)
+  Ghat_apply <- lapply(dist, Ghat)
+  
+  gpdmat <- matrix(nrow = 99, ncol = length(dist))
+  
+  for (i in 1:99) {
+    gpdsvec <- vector("list", length = n)
+    gpts <- runifpoint(n, win=window(data))
+    gpds <- pairdist(gpts, periodic=FALSE, method="C", squared=FALSE, metric=NULL)
+    diag(gpds) <- diag(gpds) + 1000
+    gpdsvec[[i]] <- apply(gpds, 2, min, simplify = TRUE)
+    for (y in dist) {
+      gpdmat[i, which(dist == y)] <- sum(unlist(gpdsvec) <= y)
+    }
+  }
+  gulist <- apply(gpdmat, 2, max, simplify = TRUE)
+  gllist <-apply(gpdmat, 2, min, simplify = TRUE)
+  gU <- lapply(gulist, function(t) t/n)
+  gL <- lapply(gllist, function(t) t/n)
+  
+  plot(G_apply, Ghat_apply, col='green', type='l', xlim=c(0,1))
+  lines(G_apply, gU, col='red')
+  lines(G_apply, gL, col='cyan')
+  legend(x=0,y=1,c("data","upper envelope", "lower envelope"),cex=.8,col=c("green","red", "cyan"),pch=c(1,2,3))
+}
+```
+
+## Japanese black pines
+This plot suggests acceptance of CSR. According to Diggle, a formal Monte Carlo test
+based on the squared difference between $\hat{G}$ and $\bar{G}$ arrives at the same
+conclusion with significance level 0.52.
+
+```{r, echo=FALSE}
+Gfunc(japanesepines, seq(from = 0, to = 0.54, by = 0.01))
+```
+
+## Redwood
+With a large proportion of $\hat{G}$ lying above the upper envelope, there is strong
+evidence for rejecting CSR. This is supported by the Monte Carlo test, in which $u_1$
+is larger than all 99 simulated $u_j$.
+
+The excess of nearest neighbour distances is typical for an aggregated pattern like
+these redwood seedlings.
+
+```{r, echo=FALSE}
+Gfunc(redwood3, seq(from = 0, to = 0.54, by = 0.01))
+```
+
+## Cells
+Again, there is strong evidence against CSR. The Monte Carlo test also gives a $u_1$
+that is comfortably larger than all the other $u_j$. Note that there is a lack of small
+nearest neighbour distances, characteristic of regular patterns.
+
+```{r, echo=FALSE}
+Gfunc(cells, seq(from = 0, to = 0.54, by = 0.01))
+```
+
+## Beilschmiedia pendula (Lauraceae)
+Similar to the behaviour of the redwood saplings, there is a large proportion of
+$\hat{G}$ above the upper envelope, so we may reject CSR.
+```{r, echo=FALSE}
+knitr::include_graphics("bei_G.jpg")
+```
+
+# Point to nearest event distances
+
+```{r, echo=FALSE}
+Ffunc <- function(data, x, y, dist){
+  n <- data$n
+  A <- area(window(data))
+  F <- function(z){1-exp(-pi*n*z^2/A)}
+  
+  x_coords <- seq(from = window(data)$window$xrange[1], to = window(data)$window$xrange[2], by = 1/(x-1))
+  y_coords <- seq(from = window(data)$window$yrange[1], to = window(data)$window$yrange[2], by = 1/(y-1))
+  d_grid <- expand.grid(x = x_coords, y = y_coords)
+  d_grid <- as.ppp(d_grid, W = window(data))
+  
+  dpdist <- nncross(d_grid, data, what='dist')
+  
+  Fhat <- function(z){sum(dpdist <= z)/d_grid$n}
+  
+  F_apply <- lapply(dist, F)
+  Fhat_apply <- lapply(dist, Fhat)
+  
+  fpdmat <- matrix(nrow = 99, ncol = length(dist))
+  for (i in 1:99) {
+    fpts <- runifpoint(n, win=window(data))
+    fpds <- nncross(d_grid, fpts, what='dist')
+    for (t in dist) {
+      fpdmat[i, which(dist == t)] <- sum(fpds <= t)
+    }
+  }
+  
+  fulist <- apply(fpdmat, 2, max, simplify = TRUE)
+  fllist <-apply(fpdmat, 2, min, simplify = TRUE)
+  fU <- lapply(fulist, function(t) t/d_grid$n)
+  fL <- lapply(fllist, function(t) t/d_grid$n)
+  
+  plot(F_apply, Fhat_apply, col='green', type='l', xlim=c(0,1), ylim=c(0,1))
+  lines(F_apply, fU, col='red')
+  lines(F_apply, fL, col='cyan')
+  legend(x=0,y=1,c("data","upper envelope", "lower envelope"),cex=.8,col=c("green","red", "cyan"),pch=c(1,2,3))
+}
+```
+
+## Japanese black pines
+This plot is obtained using a regular grid of 256 ($16 \times 16$) points over the window. We see
+that $\hat{F}$ lies close to $F$ throughout the range and between the envelopes.
+Just like our previous analysis of this data, we accept CSR.
+
+```{r, echo=FALSE}
+Ffunc(japanesepines, 16, 16, seq(from = 0, to = 0.2, by = 0.005))
+```
+
+## Redwood
+Again, we obtain the plot using the regular pattern of 256 points. Clearly $\hat{F}$
+lies below the lower envelope for most of the range, suggesting rejection of CSR. This
+is a typical behaviour of aggregated pattern.
+
+Performing a Monte Carlo test based on the squared differences between $\hat{F}$
+and $\bar{F}$ gives the same conclusion, with $u_1$ larger than all 99 simulated $u_j$.
+
+```{r, echo=FALSE}
+Ffunc(redwood3, 16, 16, seq(from = 0, to = 1.15, by = 0.01))
+```
+
+## Cells
+This time we use a regular grid of 196 ($14 \times 14$) points. With a large proportion of
+the graph of $\hat{F}$ lying above the upper envelope, CSR is rejected. The Monte
+Carlo test agrees with this at the significant level of 0.02, according to Diggle.
+
+```{r, echo=FALSE}
+Ffunc(cells, 14, 14, seq(from = 0, to = 0.25, by = 0.005))
+```
+
+## Beilschmiedia pendula (Lauraceae)
+The regular grid I used is of 7200 ($120 \times 60$) points. Again, similar to
+the redwood saplings, $\hat{F}$ lies below the lower envelope for the most part.
+This suggests that CSR may be rejected, and this is an aggregated pattern.
+
+```{r, echo=FALSE}
+knitr::include_graphics("bei_F.jpg")
+```
+
+# Quadrat counts
+
+## Japanese black pines
+For the data set of Japanese black pine saplings, we may use a $3 \times 3$ grid to
+ensure that the expected frequencies are at least 5. Below is the observation:
+```{r}
+quadratcount(japanesepines, nx = 3, ny = 3)
+```
+To perform the $\chi^2$ test, we may employ the `quadrat.test` function:
+```{r}
+quadrat.test(japanesepines, nx=3, ny=3, alternative='clustered')
+```
+Here we observe that the one-sided p-value is about 0.06, so evidence against CSR is weak.
+
+## Redwood
+Again we use a $3 \times 3$ grid for this dataset to keep the expected counts over 5.
+```{r}
+quadratcount(redwood3, nx = 3, ny = 3)
+```
+
+```{r}
+quadrat.test(redwood3, nx=3, ny=3, alternative='clustered')
+```
+The $X^2$ value of 22.77 is highly significant (p-value of 0.0037), leading to rejection
+of CSR. If we try to use quadrats of different sizes:
+```{r}
+quadrat.test(redwood3, nx=4, ny=4, alternative='clustered')
+quadrat.test(redwood3, nx=2, ny=2, alternative='clustered')
+```
+We see that the one-sided p-value for $4 \times 4$ is about 0.0002, also leading to rejection
+of CSR. However the p-value for $2 \times 2$ is 0.089. It is apparent that using
+different-sized quadrats may lead to different conclusions, and smaller-sized quadrats
+give stronger rejection of CSR.
+
+## Cells
+We will test on the data using the 3 different-sized quadrats mentioned for the redwood
+data. Here is the $3 \times 3$ quadrat counts for reference:
+```{r}
+quadratcount(cells, nx = 3, ny = 3)
+```
+
+```{r}
+quadrat.test(cells, nx=4, ny=4, alternative='regular')
+quadrat.test(cells, nx=3, ny=3, alternative='regular')
+quadrat.test(cells, nx=2, ny=2, alternative='regular')
+```
+Since we have established that the cells data is a regular pattern, we may evaluate
+the p-value as $P(\chi^2 < X^2)$ instead.
+
+The p-values defined this way for $2 \times 2, 3 \times 3, 4 \times 4$ grids are
+0.076, 0.17, 0.0004 respectively. This shows that the observed values of $X^2$ are
+below expectation in all of them, and at a significance level of 0.1 we may reject
+CSR except for the $3 \times 3$ grid. The failure in rejection for this grid and
+the large significance level suggests that this test is weak against regular patterns.
+
+## Beilschmiedia pendula (Lauraceae)
+```{r}
+quadrat.test(bei, nx=38, ny=19, alternative='clustered')
+quadrat.test(bei, nx=37, ny=19, alternative='clustered')
+quadrat.test(bei, nx=38, ny=18, alternative='clustered')
+```
+I have performed tests using $38 \times 19$, $37 \times 19$ and $38 \times 18$, 
+which give expected counts of around 5. All of the p-values obtained are very small,
+so there is strong evidence for rejection of CSR.
+
+It is evident that CSR would be rejected for Beilschmiedia Pendula, using all the
+methods mentioned above. Indeed, the sampling region has elevations and swamp areas,
+which make the distribution of these trees an inhomogeneous process.

@@ -19,4 +19,4 @@ by P. J. Diggle. [@DiggleBook]
 
 Point process models are a stochastic model to describe
 the locations of localised events in space, time or both. In particular, we will
-apply it to the distribution of different tree species over a 50ha tropical rainforest site on Barro Colorado Island, Panama. The ecological data for this site is publicly available, courtesy of the Smithsonian Tropical Research Institute.
+apply it to the distribution of different tree species over a 50ha tropical rainforest site on Barro Colorado Island, Panama. [@bciweb; @Condit; @bci]The ecological data for this site is publicly available, courtesy of the Smithsonian Tropical Research Institute.

@@ -22,60 +22,7 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
-/* CSS for citations */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-}
-.hanging-indent div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}</style>
+</style>
 
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -166,7 +113,6 @@ div.csl-indent {
       <h1 class="title">Testing for CSR</h1>
                                 <div class="quarto-categories">
                 <div class="quarto-category">news</div>
-                <div class="quarto-category">code</div>
                 <div class="quarto-category">analysis</div>
               </div>
                   </div>
@@ -217,125 +163,12 @@ H(t) =
 \]</span> And for a circle of unit radius: <span class="math display">\[
 H(t) = 1+\pi^{-1}\{2(t^2-1)\cos^{-1}(\frac{t}{2}) - t(1+\frac{t^2}{2})\sqrt{1-\frac{t^2}{4}}\}
 \]</span> for all <span class="math inline">\(0 \leq t \leq 2\)</span>. Indeed, <span class="math inline">\(H(t)\)</span> varies depending on the size and shape of the sampling region <span class="math inline">\(A\)</span>.</p>
-<p>Assume that <span class="math inline">\(H(t)\)</span> for the region in interest is known. We then calculate the empirical distribution function (EDF): <span class="math display">\[
+<p>Assume that <span class="math inline">\(H(t)\)</span> for the region in interest is known. We then calculate the <em>empirical distribution function (EDF)</em>: <span class="math display">\[
 \hat{H}_1(t) = \{\frac{1}{2}n(n-1)\}^{-1} \#(t_{ij} \leq t)
 \]</span> where <span class="math inline">\(\#(t_{ij} \leq t)\)</span> means the number of observed distances that are at most <span class="math inline">\(t\)</span>.</p>
 <p>Next, we simulate <span class="math inline">\(n\)</span> events under CSR <span class="math inline">\(s-1\)</span> times. From these we obtain <span class="math inline">\(\hat{H}_i(t)\)</span> for <span class="math inline">\(i=2, 3, \dots, s\)</span>. Hereby we obtain the upper and lower envelopes: <span class="math display">\[
 U(t)= \text{max}\{\hat{H}_i(t)\}; \space L(t)= \text{min}\{\hat{H}_i(t)\}
 \]</span> <span class="math inline">\(\hat{H}_1(t), U(t)\)</span> and <span class="math inline">\(L(t)\)</span> can be plotted against <span class="math inline">\(H(t)\)</span>. If <span class="math inline">\(\hat{H}_1(t)\)</span> lies close to <span class="math inline">\(H(t)\)</span> and is between <span class="math inline">\(U(t)\)</span> and <span class="math inline">\(L(t)\)</span> throughout the range, we may accept CSR.</p>
-<p>My replication of Diggle’s plot on Japanese black pine saplings, using 99 simulations of CSR for the envelopes, affirms acceptance of CSR. This agrees with <span class="citation" data-cites="Bartlett">(<a href="#ref-Bartlett" role="doc-biblioref">Bartlett 1964</a>)</span> and <span class="citation" data-cites="Besag">(<a href="#ref-Besag" role="doc-biblioref">Besag and Diggle 1977</a>)</span>, who used a <span class="math inline">\(\chi^2\)</span> test on a histogram of inter-event distances.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(spatstat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'spatstat' was built under R version 4.1.3</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Loading required package: spatstat.data</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'spatstat.data' was built under R version 4.1.3</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Loading required package: spatstat.geom</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'spatstat.geom' was built under R version 4.1.3</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>spatstat.geom 3.1-0</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Loading required package: spatstat.random</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'spatstat.random' was built under R version 4.1.3</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>spatstat.random 3.1-4</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Loading required package: spatstat.explore</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'spatstat.explore' was built under R version 4.1.3</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Loading required package: nlme</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>spatstat.explore 3.1-0</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Loading required package: spatstat.model</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'spatstat.model' was built under R version 4.1.3</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Loading required package: rpart</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>spatstat.model 3.2-1</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Loading required package: spatstat.linnet</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'spatstat.linnet' was built under R version 4.1.3</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>spatstat.linnet 3.1-0</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>
-spatstat 3.0-3 
-For an introduction to spatstat, type 'beginner' </code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(attention)</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>jpp <span class="ot">&lt;-</span> japanesepines</span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">65</span></span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>pd <span class="ot">&lt;-</span> <span class="fu">pairdist</span>(jpp, <span class="at">periodic=</span><span class="cn">FALSE</span>, <span class="at">method=</span><span class="st">"C"</span>, <span class="at">squared=</span><span class="cn">FALSE</span>, <span class="at">metric=</span><span class="cn">NULL</span>)</span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>Hhat <span class="ot">=</span> <span class="cf">function</span>(t){<span class="fu">sum</span>(pd[<span class="fu">lower.tri</span>(pd)] <span class="sc">&lt;=</span> t) <span class="sc">/</span> (n<span class="sc">*</span>(n<span class="dv">-1</span>)<span class="sc">/</span><span class="dv">2</span>)}</span>
-<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>H <span class="ot">=</span> <span class="cf">function</span>(t){</span>
-<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="dv">0</span> <span class="sc">&lt;=</span> t <span class="sc">&amp;&amp;</span> t <span class="sc">&lt;=</span> <span class="dv">1</span>) {</span>
-<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>    pi<span class="sc">*</span>t<span class="sc">^</span><span class="dv">2</span> <span class="sc">-</span> <span class="dv">8</span><span class="sc">/</span><span class="dv">3</span><span class="sc">*</span>t<span class="sc">^</span><span class="dv">3</span> <span class="sc">+</span> t<span class="sc">^</span><span class="dv">4</span><span class="sc">/</span><span class="dv">2</span></span>
-<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> <span class="cf">if</span> (<span class="dv">1</span> <span class="sc">&lt;</span> t <span class="sc">&amp;&amp;</span> t <span class="sc">&lt;=</span> <span class="fl">1.42</span>) {</span>
-<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>    <span class="dv">1</span><span class="sc">/</span><span class="dv">3</span> <span class="sc">-</span> <span class="dv">2</span><span class="sc">*</span>t<span class="sc">^</span><span class="dv">2</span> <span class="sc">-</span> t<span class="sc">^</span><span class="dv">4</span><span class="sc">/</span><span class="dv">2</span> <span class="sc">+</span> <span class="dv">4</span><span class="sc">*</span>(t<span class="sc">^</span><span class="dv">2</span> <span class="sc">-</span> <span class="dv">1</span>)<span class="sc">^</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>)<span class="sc">*</span>(<span class="dv">2</span><span class="sc">*</span>t<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> <span class="dv">1</span>)<span class="sc">/</span><span class="dv">3</span> <span class="sc">+</span><span class="dv">2</span><span class="sc">*</span>t<span class="sc">^</span><span class="dv">2</span><span class="sc">*</span><span class="fu">asin</span>(<span class="dv">2</span><span class="sc">*</span>t<span class="sc">^</span>(<span class="sc">-</span><span class="dv">2</span>) <span class="sc">-</span> <span class="dv">1</span>)</span>
-<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>dist <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">0</span>, <span class="at">to =</span> <span class="fl">1.42</span>, <span class="at">by =</span> <span class="fl">0.01</span>)</span>
-<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a>H_apply <span class="ot">&lt;-</span> <span class="fu">lapply</span>(dist, H)</span>
-<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a>Hhat_apply <span class="ot">&lt;-</span> <span class="fu">lapply</span>(dist, Hhat)</span>
-<span id="cb23-21"><a href="#cb23-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-22"><a href="#cb23-22" aria-hidden="true" tabindex="-1"></a>pdlist <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="st">"list"</span>, <span class="at">length =</span> <span class="fu">length</span>(dist))</span>
-<span id="cb23-23"><a href="#cb23-23" aria-hidden="true" tabindex="-1"></a>pdmat <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="at">nrow =</span> <span class="dv">99</span>, <span class="at">ncol =</span> <span class="fu">length</span>(dist))</span>
-<span id="cb23-24"><a href="#cb23-24" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">99</span>) {</span>
-<span id="cb23-25"><a href="#cb23-25" aria-hidden="true" tabindex="-1"></a>  pts <span class="ot">&lt;-</span> <span class="fu">runifpoint</span>(n, <span class="at">win=</span><span class="fu">window</span>(jpp))</span>
-<span id="cb23-26"><a href="#cb23-26" aria-hidden="true" tabindex="-1"></a>  pds <span class="ot">&lt;-</span> <span class="fu">pairdist</span>(pts, <span class="at">periodic=</span><span class="cn">FALSE</span>, <span class="at">method=</span><span class="st">"C"</span>, <span class="at">squared=</span><span class="cn">FALSE</span>, <span class="at">metric=</span><span class="cn">NULL</span>)</span>
-<span id="cb23-27"><a href="#cb23-27" aria-hidden="true" tabindex="-1"></a>  pdsvec <span class="ot">&lt;-</span> pds[<span class="fu">lower.tri</span>(pds)]</span>
-<span id="cb23-28"><a href="#cb23-28" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (t <span class="cf">in</span> dist) {</span>
-<span id="cb23-29"><a href="#cb23-29" aria-hidden="true" tabindex="-1"></a>    pdmat[i, <span class="fu">which</span>(dist <span class="sc">==</span> t)] <span class="ot">&lt;-</span> <span class="fu">sum</span>(pdsvec <span class="sc">&lt;=</span> t)</span>
-<span id="cb23-30"><a href="#cb23-30" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb23-31"><a href="#cb23-31" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb23-32"><a href="#cb23-32" aria-hidden="true" tabindex="-1"></a>ulist <span class="ot">&lt;-</span> <span class="fu">RowMax</span>(<span class="fu">t</span>(pdmat))</span>
-<span id="cb23-33"><a href="#cb23-33" aria-hidden="true" tabindex="-1"></a>llist <span class="ot">&lt;-</span><span class="fu">apply</span>(pdmat, <span class="dv">2</span>, min, <span class="at">simplify =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb23-34"><a href="#cb23-34" aria-hidden="true" tabindex="-1"></a>U <span class="ot">&lt;-</span> <span class="fu">lapply</span>(ulist, <span class="cf">function</span>(t) t<span class="sc">/</span>((n<span class="sc">*</span>(n<span class="dv">-1</span>))<span class="sc">/</span><span class="dv">2</span>))</span>
-<span id="cb23-35"><a href="#cb23-35" aria-hidden="true" tabindex="-1"></a>L <span class="ot">&lt;-</span> <span class="fu">lapply</span>(llist, <span class="cf">function</span>(t) t<span class="sc">/</span>((n<span class="sc">*</span>(n<span class="dv">-1</span>))<span class="sc">/</span><span class="dv">2</span>))</span>
-<span id="cb23-36"><a href="#cb23-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-37"><a href="#cb23-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-38"><a href="#cb23-38" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(H_apply, Hhat_apply, <span class="at">col=</span><span class="st">'green'</span>, <span class="at">type=</span><span class="st">'l'</span>)</span>
-<span id="cb23-39"><a href="#cb23-39" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(H_apply, U, <span class="at">col=</span><span class="st">'red'</span>)</span>
-<span id="cb23-40"><a href="#cb23-40" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(H_apply, L, <span class="at">col=</span><span class="st">'cyan'</span>)</span>
-<span id="cb23-41"><a href="#cb23-41" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="at">x=</span><span class="dv">0</span>,<span class="at">y=</span><span class="dv">1</span>,<span class="fu">c</span>(<span class="st">"data"</span>,<span class="st">"upper envelope"</span>, <span class="st">"lower envelope"</span>),<span class="at">cex=</span>.<span class="dv">8</span>,<span class="at">col=</span><span class="fu">c</span>(<span class="st">"green"</span>,<span class="st">"red"</span>, <span class="st">"cyan"</span>),<span class="at">pch=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="index_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
 <section id="monte-carlo-test" class="level2">
 <h2 class="anchored" data-anchor-id="monte-carlo-test">Monte Carlo test</h2>
 <p>2 ways to construct an exact Monte Carlo test for CSR are as below:</p>
@@ -345,8 +178,8 @@ For an introduction to spatstat, type 'beginner' </code></pre>
 </ol>
 <p>For (i), we would need to choose a sensible <span class="math inline">\(t_0\)</span> for the problem. While (ii) is more objective, it may not be a powerful test for inter-event distances.</p>
 <p>For a region A in which <span class="math inline">\(H(t)\)</span> is unknown, we can replace it by: <span class="math display">\[
-\bar{H}_i(t) = \frac{\displaystyle \sum_{j \ne i}\hat{H}_j(t)}{s-1}
-\]</span> While <span class="math inline">\(u_i\)</span> under CSR is no longer independent, it still fulfills the requirement that all rankings of <span class="math inline">\(u_1\)</span> are equi-probable, as they are inter-changeable. We can plot <span class="math inline">\(U(t), \space L(t)\)</span> and <span class="math inline">\(\hat{H}_1(t)\)</span> against <span class="math inline">\(\bar{H}_1(t)\)</span>. Since <span class="math inline">\(\bar{H}_1(t)\)</span> only depends on simulations of CSR, it is an unbiased estimate of H(t).</p>
+\bar{H}_i(t) = \frac{1}{s-1}\displaystyle \sum_{j \ne i}\hat{H}_j(t)
+\]</span> While <span class="math inline">\(u_i\)</span> under CSR is no longer independent, it still fulfills the requirement that all rankings of <span class="math inline">\(u_1\)</span> are equi-probable, as they are inter-changeable. We can plot <span class="math inline">\(U(t), \space L(t)\)</span> and <span class="math inline">\(\hat{H}_1(t)\)</span> against <span class="math inline">\(\bar{H}_1(t)\)</span>. Since <span class="math inline">\(\bar{H}_1(t)\)</span> only depends on simulations of CSR, it is an unbiased estimate of <span class="math inline">\(H(t)\)</span>.</p>
 </section>
 </section>
 <section id="nearest-neighbour-distances" class="level1">
@@ -369,7 +202,7 @@ u_i = \int \{\hat{G}_i(y)-\bar{G}_i(y)\}^2 \space dy,
 E(\bar{y}) = 0.5(\frac{n}{|A|})^{1/2} + \frac{1}{n}(0.051+0.042n^{-1/2})P
 \]</span> and <span class="math display">\[
 Var(\bar{y}) = 0.070n^{-2}|A|+0.037(n^{-5}|A|)^{1/2}P
-\]</span> where P is the perimeter of region A. Significantly small or large {y} suggests aggregation or regularity, respectively.</p>
+\]</span> where P is the perimeter of region A. Significantly small or large <span class="math inline">\(\bar{y}\)</span> suggests aggregation or regularity, respectively.</p>
 </section>
 </section>
 <section id="point-to-nearest-event-distances" class="level1">
@@ -389,17 +222,9 @@ X^2 = \displaystyle\sum_{i=1}^m \frac{(n_i - \bar{n})^2}{\bar{n}}
 \]</span> Its null distribution is <span class="math inline">\(\chi_{m-1}^2\)</span>, provided that <span class="math inline">\(\bar{n}\)</span> is not too small and that each <span class="math inline">\(x_i\)</span> is at least 5. If <span class="math inline">\(P(\chi_{m-1}^2 &gt; X^2)\)</span> is less than the significance level, we may reject CSR.</p>
 
 
-
 </section>
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
-<div id="ref-Bartlett" class="csl-entry" role="listitem">
-Bartlett, M. S. 1964. <span>“The Spectral Analysis of Two-Dimensional Point Processes.”</span> <em>Biometrika</em> 52: 299–311. <a href="https://doi.org/10.1093/biomet/51.3-4.299">https://doi.org/10.1093/biomet/51.3-4.299</a>.
-</div>
-<div id="ref-Besag" class="csl-entry" role="listitem">
-Besag, Julian, and Peter J. Diggle. 1977. <span>“<span class="nocase">Simple Monte Carlo Tests for Spatial Pattern</span>.”</span> <em>Journal of the Royal Statistical Society. Series C (Applied Statistics)</em> 26 (3): 327–33. <a href="https://doi.org/10.2307/2346974">https://doi.org/10.2307/2346974</a>.
-</div>
-</div></section></div></main> <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

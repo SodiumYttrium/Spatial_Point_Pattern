@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.433">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Natalie Young">
+<meta name="dcterms.date" content="2023-09-04">
+
+<title>UROP_blog - Various Models for Point Patterns</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">UROP_blog</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html" rel="" target="">
+ <span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/" rel="" target=""><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com" rel="" target=""><i class="bi bi-twitter" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools">
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Various Models for Point Patterns</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">news</div>
+                <div class="quarto-category">analysis</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Natalie Young </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">September 4, 2023</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<p>The last topic on this project will be about different models for point patterns, including:</p>
+<ul>
+<li>Contagious distributions</li>
+<li>Poisson cluster processes</li>
+<li>Inhomogeneous Poisson processes</li>
+<li>Cox processes</li>
+</ul>
+<section id="contagious-distributions" class="level1">
+<h1>Contagious distributions</h1>
+<p>The term was first used by Neyman <span class="citation" data-cites="Neyman">(<a href="#ref-Neyman" role="doc-biblioref">Neyman 1939</a>)</span> to describe discrete distributions that exhibits contagious or clustering behaviour. Neyman proposed a Poisson process of egg- masses. Larvae hatch from these eggs, and then move to positions relative to the eggs according to a bivariate distribution.</p>
+<p>Suppose the number of egg clusters is <span class="math inline">\(M\)</span>, which follows a Poisson process of intensity <span class="math inline">\(\rho\)</span>, and each cluster produces a random number <span class="math inline">\(S\)</span> of offspring (larvae). Therefore <span class="math inline">\(M\)</span> follows a Poisson distribution with mean <span class="math inline">\(\rho |A|\)</span>. The number of larvae in region <span class="math inline">\(A\)</span> is <span class="math inline">\(N(A) = S_1 + \dots + S_M\)</span>. If the probability generating function (pgf) of <span class="math inline">\(S\)</span> is <span class="math inline">\(\pi_s(z)\)</span>, the pgf for <span class="math inline">\(N(A)\)</span> is: <span class="math display">\[
+\pi(z; A) = exp[-\rho |A| \{1-\pi_s(z)\}]
+\]</span> Neyman’s Type A distribution is obtained by setting <span class="math inline">\(\pi_s(z) = exp[-\mu(1-z)]\)</span>.</p>
+<p>Now let the number of egg masses per unit area follow a Poisson process of mean <span class="math inline">\(k\rho\)</span>, where <span class="math inline">\(k\)</span> also follows a Poisson distribution with a known mean. In this case, we get a <em>mixed</em>, or <em>compound</em> Poisson distribution. The number of larvae per unit area still follows a Neyman’s Type A distribution.</p>
+<p>However according to Evans <span class="citation" data-cites="Evans">(<a href="#ref-Evans" role="doc-biblioref">Evans 1953</a>)</span>, plant quadrat count data are very well fitted to Neyman’s Type A distribution, but not insect counts. Instead, insect count data are fitted by the negative binomial distribution. This is possibility due to greater competition and overcrowding in plants.</p>
+<p>The negative binomial distribution is obtained when <span class="math inline">\(S\)</span> has a logarithmic series distribution with <span class="math inline">\(\pi_s(z) = 1 - log\{1+\beta(1-z)\}/log(1+\beta)\)</span> for some <span class="math inline">\(\beta &gt; 0\)</span>. It can be derived as a <em>compounded</em>, or <em>mixed</em> Poisson distribution, in which the parameter is determined by random sampling from a gamma distribution.</p>
+</section>
+<section id="poisson-cluster-processes" class="level1">
+<h1>Poisson cluster processes</h1>
+<p>Poisson cluster processes follow 3 postulates:</p>
+<ul>
+<li>Parent events follow a Poisson process with intensity <span class="math inline">\(\rho\)</span>.</li>
+<li><span class="math inline">\(S_i\)</span>, the number of offspring that the <span class="math inline">\(i\)</span>th parent produces, are independent and identically distributed, with probability distribution <span class="math inline">\(p_s: s = 0, 1, \dots\)</span></li>
+<li>The positions of the offspring relative to the parents are also independent and identically distributed with a bivariate pdf <span class="math inline">\(h\)</span>.</li>
+</ul>
+<p>Let the pdf of the vector difference between positions of 2 offspring with the same parent be: <span class="math display">\[
+h_2(x) = \int h(x)h(x-y)dx
+\]</span> And denote the corresponding cdf as <span class="math inline">\(H_2(x)\)</span>. For an arbitrary event in a cluster of size <span class="math inline">\(S\)</span>, the expected number of other events from the same cluster located within distance <span class="math inline">\(t\)</span> is <span class="math inline">\((S-1)H_2(t)\)</span>. The probability distribution of the cluster size of the arbitrary event is obtained by length-biased sampling from the cluster size distribution, <span class="math inline">\(p(s)\)</span>: We get <span class="math inline">\(p*(s) = sp(s)/\mu\)</span>, where <span class="math inline">\(\mu = E(S)\)</span>. Taking the average, we get that the expected number of related events within distance <span class="math inline">\(t\)</span> is <span class="math inline">\(E[S(S-1)]H_2(t)/\mu\)</span>.</p>
+<p>For unrelated events, since they are assumed to be located independently of the parent event, the expected number of unrelated events within distance <span class="math inline">\(t\)</span> of the arbitrary event is <span class="math inline">\(\lambda \pi t^2\)</span>. Summing up the formulae for both related and unrelated events, we get: <span class="math display">\[
+\lambda K(t) = \lambda \pi t^2 + E[S(S-1)]H_2(t)/\mu
+\]</span> Dividing by <span class="math inline">\(\lambda = \rho \mu\)</span>, we obtain the K-function: <span class="math display">\[
+K(t) = \pi t^2 + E[S(S-1)]H_2(t)/(\rho \mu ^2)
+\]</span> As <span class="math inline">\(t \rightarrow \infty\)</span>, <span class="math inline">\(K(t) - \pi t^2\)</span> tends to a constant, <span class="math inline">\(E[S(S-1)]/(\rho \mu^2)\)</span>.</p>
+</section>
+<section id="inhomogeneous-poisson-processes" class="level1">
+<h1>Inhomogeneous Poisson processes</h1>
+<p>The 2 main properties for an inhomogeneous Poisson process are:</p>
+<ul>
+<li><span class="math inline">\(N(A)\)</span> has a Poisson distribution with mean <span class="math inline">\(\int_A \lambda(x) dx\)</span>.</li>
+<li>Given there are <span class="math inline">\(n\)</span> events in region <span class="math inline">\(A\)</span>, they are an independent random sample of a distribution on <span class="math inline">\(A\)</span> with a pdf proportional to the rate, <span class="math inline">\(\lambda(x)\)</span>.</li>
+</ul>
+<p>By having the intensity as a function of spatial location, covariates may be introduced. Diggle has given an example: suppose the locations of a species of tree depends on the elavation of the ground. Then a possible intensity function may be <span class="math inline">\(\lambda(x) =\)</span> <span class="math inline">\(exp(\alpha + \beta z(x))\)</span>, where <span class="math inline">\(z(x)\)</span> denotes the elavation at location <span class="math inline">\(x\)</span>.</p>
+<p>In ecology, species presence-only data may be modelled with inhomogeneous Poisson processes. To account for sampling bias and detection errors, the data should be treated as a thinned data. <span class="citation" data-cites="IPP1">(<a href="#ref-IPP1" role="doc-biblioref">Mugumaarhahama 2022</a>)</span> We assume that the expected occurrences of in the region <span class="math inline">\(A\)</span> is a Poisson random variable with mean <span class="math inline">\(\mu(A) = \int_A \lambda(s) ds\)</span>. <span class="citation" data-cites="Dorazio">(<a href="#ref-Dorazio" role="doc-biblioref">M. 2014</a>)</span> <span class="math inline">\(\lambda(s)\)</span> is formulated as a log-linear function with unknown parameters <span class="math inline">\(\beta\)</span> and location-specific covariates <span class="math inline">\(x(s)\)</span> (such as elevation and temperature). We obtain a formula of the form: <span class="math display">\[
+log(\lambda(s)) = \beta'x(s) = \beta_0 + \displaystyle \sum_{j=1}^l \beta_j x_j(s)
+\]</span> Assuming an individual is present at location <span class="math inline">\(s\)</span>. The probability of it being detected is <span class="math inline">\(b(s)\)</span>, where: <span class="math display">\[
+logit(b(s)) = \alpha' w(s) = \alpha_0 + \displaystyle \sum_{j=1}^g \alpha_j w_j(s)
+\]</span> where <span class="math inline">\(w(s)\)</span> are location-specific covariates (such as distance to a road and populaধon centres).</p>
+<p>The likelihood function for estimating <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span> is: <span class="math display">\[
+L(\beta, \alpha) = exp(-\int_A \lambda(s) b(s) ds) \displaystyle \prod_{i=1}^m \lambda(s_i)b(s_i)
+\]</span></p>
+</section>
+<section id="cox-processes" class="level1">
+<h1>Cox processes</h1>
+<p>The logic behind using the Poisson cluster process is that related events may cluster. Another reason for aggregation might be environmental heterogeneity, which we account for using the inhomogeneous Poisson process. However, this environmental heterogeneity itself might be stochastic. A Poisson process with stochastic intensity functions is called a <em>Cox process</em>.</p>
+<p>A spatial Cox process can be defined by the following postulates:</p>
+<ul>
+<li><span class="math inline">\(\{\Lambda(x): x \in \mathbb{R}^2 \}\)</span> is a non-negative-valued stochastic process.</li>
+<li>Conditional on <span class="math inline">\(\{\Lambda(x) = \lambda(x): x \in \mathbb{R}^2 \}\)</span>, the event form an inhomogeneous Poisson process with intensity function <span class="math inline">\(\lambda(x)\)</span>.</li>
+</ul>
+<p>A Cox process is stationary if and only if the intensity process <span class="math inline">\(\Lambda(x)\)</span> is stationary. In this case, the intensity for the Cox process is obtained from taking expectation of the intensity process: <span class="math inline">\(\lambda = E[\Lambda(x)]\)</span>.</p>
+<p>Given <span class="math inline">\(\{\Lambda(x)\}\)</span>, the conditional intensity of a pair of events at locations <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> respectively, is <span class="math inline">\(\Lambda(x)\Lambda(y)\)</span>. Therefore <span class="math inline">\(\lambda_2(x,y) = E[\Lambda(x)\Lambda(y)]\)</span>. In the stationary, isotropic case, this can be written as <span class="math inline">\(\lambda_2(t) = \lambda^2 + \gamma(t)\)</span>, where <span class="math inline">\(t = ||x-y||\)</span> and <span class="math inline">\(\gamma(t) = Cov\{\Lambda(x), \Lambda(y)\}\)</span>.</p>
+<p>According to Kingman <span class="citation" data-cites="Kingman">(<a href="#ref-Kingman" role="doc-biblioref">Kingman 1977</a>)</span>, we can use Cox processes to model for a reproducing population as well. Denote <span class="math inline">\(G_n\)</span> as the point process that generates the locations, <span class="math inline">\(X_i\)</span>, of individuals in the <span class="math inline">\(n\)</span>th generation. Suppose reproduction obeys the following rules:</p>
+<ul>
+<li>For a parent at location <span class="math inline">\(x_i\)</span>, the number of offspring produced is a Poisson random variable with mean <span class="math inline">\(\mu_i = \mu_i(G_n)\)</span></li>
+<li>The offspring’s locations relative to the parent follows a bivariate pdf and are independent from each other.</li>
+</ul>
+<p>These rules are similar to the Poisson cluster process, but allow <span class="math inline">\(\mu_i\)</span> to depend on the configuration of the parents. <span class="math inline">\(G_{n+1}\)</span> is thus the process defining the locations of the offspring. It is a Cox process defined by: <span class="math display">\[
+\Lambda(x) = \displaystyle \sum_{i=1}^\infty \mu_i (G_n) h(x-x_i)
+\]</span> where <span class="math inline">\(x_i\)</span> are events of the <span class="math inline">\(n\)</span>th generation.</p>
+
+
+
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-Evans" class="csl-entry" role="listitem">
+Evans, D. A. 1953. <span>“Experimental Evidence Concerning Contagious Distributions in Ecology.”</span> <em>Biometrika</em> 40: 186–211. <a href="https://doi.org/10.2307/2333108">https://doi.org/10.2307/2333108</a>.
+</div>
+<div id="ref-Kingman" class="csl-entry" role="listitem">
+Kingman, J. F. C. 1977. <span>“Remarks on the Spatial Distribution of a Reproducing Population.”</span> <em>Journal of Applied Probability</em> 14: 577–83. <a href="https://doi.org/10.2307/3213460">https://doi.org/10.2307/3213460</a>.
+</div>
+<div id="ref-Dorazio" class="csl-entry" role="listitem">
+M., Dorazio R. 2014. <span>“Accounting for Imperfect Detection and Survey Bias in Statistical Analysis of Presence-Only Data.”</span> <em>Global Ecology and Biogeography</em> 23: 1472–84. <a href="https://doi.org/10.1111/geb.12216">https://doi.org/10.1111/geb.12216</a>.
+</div>
+<div id="ref-IPP1" class="csl-entry" role="listitem">
+Mugumaarhahama, Fandohan, Y. 2022. <span>“Inhomogeneous Poisson Point Process for Species Distribution Modelling: Relative Performance of Methods Accounting for Sampling Bias and Imperfect Detection.”</span> <em>Modeling Earth Systems and Environment</em> 8: 5419–32. <a href="https://doi.org/10.1007/s40808-022-01417-3">https://doi.org/10.1007/s40808-022-01417-3</a>.
+</div>
+<div id="ref-Neyman" class="csl-entry" role="listitem">
+Neyman, J. 1939. <span>“On a New Class of "Contagious" Distributions, Applicable in Entomology and Bacteriology.”</span> <em>The Annals of Mathematical Statistics</em> 10: 35–57.
+</div>
+</div></section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

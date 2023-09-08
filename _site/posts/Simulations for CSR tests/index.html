@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.433">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Natalie Young">
+<meta name="dcterms.date" content="2023-07-28">
+
+<title>UROP_blog - Simulations for CSR Tests</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">UROP_blog</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html" rel="" target="">
+ <span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/" rel="" target=""><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com" rel="" target=""><i class="bi bi-twitter" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools">
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Simulations for CSR Tests</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">code</div>
+                <div class="quarto-category">analysis</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Natalie Young </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">July 28, 2023</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<p>This post will be a collection of simulations I made based on the materials from the post ‘Testing for CSR’. The data I will be using are:</p>
+<ul>
+<li>Locations of 65 Japanese black pine saplings in a square of side-length 5.7 metres <span class="citation" data-cites="Numata">(<a href="#ref-Numata" role="doc-biblioref">Numata 1961</a>)</span></li>
+</ul>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<ul>
+<li>Locations of 62 redwood seedlings in a square of side-length 23 metres <span class="citation" data-cites="Strauss MSP">(<a href="#ref-Strauss" role="doc-biblioref">Strauss 1975</a>; <a href="#ref-MSP" role="doc-biblioref">Ripley 1977</a>)</span></li>
+</ul>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<ul>
+<li>Locations of 42 cell centres in a unit square <span class="citation" data-cites="MSP">(<a href="#ref-MSP" role="doc-biblioref">Ripley 1977</a>)</span></li>
+</ul>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<ul>
+<li>Locations of 3604 trees of the species Beilschmiedia pendula (Lauraceae) in a 1000 by 500 metre rectangular sampling region in the tropical rainforest of Barro Colorado Island <span class="citation" data-cites="HF CHF Condit">(<a href="#ref-HF" role="doc-biblioref">Hubbell and Foster 1983</a>; <a href="#ref-CHF" role="doc-biblioref">H. Condit R. and Foster 1996</a>; <a href="#ref-Condit" role="doc-biblioref">R. Condit 1998</a>)</span></li>
+</ul>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>The first 3 have been used for demonstration in Diggle’s book, and my plots indeed show similar results to Diggle’s.</p>
+<section id="inter-event-distances" class="level1">
+<h1>Inter-event distances</h1>
+<section id="japanese-black-pines" class="level2">
+<h2 class="anchored" data-anchor-id="japanese-black-pines">Japanese black pines</h2>
+<p>My replication of Diggle’s plot on Japanese black pine saplings, using 99 simulations of CSR for the envelopes, affirms acceptance of CSR. This agrees with <span class="citation" data-cites="Bartlett">(<a href="#ref-Bartlett" role="doc-biblioref">Bartlett 1964</a>)</span> and <span class="citation" data-cites="Besag">(<a href="#ref-Besag" role="doc-biblioref">Besag and Diggle 1977</a>)</span>, who used a <span class="math inline">\(\chi^2\)</span> test on a histogram of inter-event distances.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="redwood" class="level2">
+<h2 class="anchored" data-anchor-id="redwood">Redwood</h2>
+<p><span class="math inline">\(\hat{H}_1(t)\)</span> is greater than <span class="math inline">\(H(t)\)</span> throughout the range, especially for very small and very large values of <span class="math inline">\(H(t)\)</span>, where <span class="math inline">\(\hat{H}_1(t)\)</span> exceeds the upper envelope. The excess number of small values of <span class="math inline">\(H(t)\)</span> may be explained by Strauss’ remark that a distance of 6 feet on the ground (<span class="math inline">\(t \approx 0.08\)</span>), was “very roughly the range at which a pair of seedlings could interact.”</p>
+<p>A formal test of significance based on the measure of the discrepancy between <span class="math inline">\(\hat{H}_1(t)\)</span> and <span class="math inline">\(H(t)\)</span>, however, might suggest acceptance of CSR with a significance level of 0.22, according to Diggle. Indeed, <span class="math inline">\(\hat{H}_1(t)\)</span> lies relatively close to <span class="math inline">\(H(t)\)</span> throughout the range. This shows that observation of the EDF plot with the simulation envelopes may provide insights that formal tests of significance do not.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="cells" class="level2">
+<h2 class="anchored" data-anchor-id="cells">Cells</h2>
+<p>Again, a formal test of significance may suggest acceptance of CSR, with a significance level of 0.23. However with parts of the graph (especially at low values of <span class="math inline">\(H(t)\)</span>) lying outside the simulation envelopes, it suggests otherwise. Note that for small values of <span class="math inline">\(t\)</span>, <span class="math inline">\(\hat{H}_1(t)=0\)</span>, i.e.&nbsp;small inter-event distances are absent. This explains the regularity of the pattern. Also, for large values of <span class="math inline">\(t\)</span>, <span class="math inline">\(\hat{H}_1(t)\)</span> lies close to the upper envelope. Looking at the graph depicting the data, we can observe that there are no events present at the corners of the square. These empty spaces result in lack of large inter-event distances.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="beilschmiedia-pendula-lauraceae" class="level2">
+<h2 class="anchored" data-anchor-id="beilschmiedia-pendula-lauraceae">Beilschmiedia pendula (Lauraceae)</h2>
+<p>Clearly, with the excess of small inter-event distances and the deficit of larger inter-event distances, we have sufficient evidence to reject CSR. This is to be expected, as we see from the graph that events are clustered around certain areas, with large empty spaces near the middle part of the region and to the right.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="bei_H.jpg" class="img-fluid"></p>
+</div>
+</div>
+</section>
+</section>
+<section id="nearest-neighbour-distance" class="level1">
+<h1>Nearest neighbour distance</h1>
+<section id="japanese-black-pines-1" class="level2">
+<h2 class="anchored" data-anchor-id="japanese-black-pines-1">Japanese black pines</h2>
+<p>This plot suggests acceptance of CSR. According to Diggle, a formal Monte Carlo test based on the squared difference between <span class="math inline">\(\hat{G}\)</span> and <span class="math inline">\(\bar{G}\)</span> arrives at the same conclusion with significance level 0.52.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="redwood-1" class="level2">
+<h2 class="anchored" data-anchor-id="redwood-1">Redwood</h2>
+<p>With a large proportion of <span class="math inline">\(\hat{G}\)</span> lying above the upper envelope, there is strong evidence for rejecting CSR. This is supported by the Monte Carlo test, in which <span class="math inline">\(u_1\)</span> is larger than all 99 simulated <span class="math inline">\(u_j\)</span>.</p>
+<p>The excess of nearest neighbour distances is typical for an aggregated pattern like these redwood seedlings.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="cells-1" class="level2">
+<h2 class="anchored" data-anchor-id="cells-1">Cells</h2>
+<p>Again, there is strong evidence against CSR. The Monte Carlo test also gives a <span class="math inline">\(u_1\)</span> that is comfortably larger than all the other <span class="math inline">\(u_j\)</span>. Note that there is a lack of small nearest neighbour distances, characteristic of regular patterns.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="beilschmiedia-pendula-lauraceae-1" class="level2">
+<h2 class="anchored" data-anchor-id="beilschmiedia-pendula-lauraceae-1">Beilschmiedia pendula (Lauraceae)</h2>
+<p>Similar to the behaviour of the redwood saplings, there is a large proportion of <span class="math inline">\(\hat{G}\)</span> above the upper envelope, so we may reject CSR.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="bei_G.jpg" class="img-fluid"></p>
+</div>
+</div>
+</section>
+</section>
+<section id="point-to-nearest-event-distances" class="level1">
+<h1>Point to nearest event distances</h1>
+<section id="japanese-black-pines-2" class="level2">
+<h2 class="anchored" data-anchor-id="japanese-black-pines-2">Japanese black pines</h2>
+<p>This plot is obtained using a regular grid of 256 (<span class="math inline">\(16 \times 16\)</span>) points over the window. We see that <span class="math inline">\(\hat{F}\)</span> lies close to <span class="math inline">\(F\)</span> throughout the range and between the envelopes. Just like our previous analysis of this data, we accept CSR.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="redwood-2" class="level2">
+<h2 class="anchored" data-anchor-id="redwood-2">Redwood</h2>
+<p>Again, we obtain the plot using the regular pattern of 256 points. Clearly <span class="math inline">\(\hat{F}\)</span> lies below the lower envelope for most of the range, suggesting rejection of CSR. This is a typical behaviour of aggregated pattern.</p>
+<p>Performing a Monte Carlo test based on the squared differences between <span class="math inline">\(\hat{F}\)</span> and <span class="math inline">\(\bar{F}\)</span> gives the same conclusion, with <span class="math inline">\(u_1\)</span> larger than all 99 simulated <span class="math inline">\(u_j\)</span>.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="cells-2" class="level2">
+<h2 class="anchored" data-anchor-id="cells-2">Cells</h2>
+<p>This time we use a regular grid of 196 (<span class="math inline">\(14 \times 14\)</span>) points. With a large proportion of the graph of <span class="math inline">\(\hat{F}\)</span> lying above the upper envelope, CSR is rejected. The Monte Carlo test agrees with this at the significant level of 0.02, according to Diggle.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="beilschmiedia-pendula-lauraceae-2" class="level2">
+<h2 class="anchored" data-anchor-id="beilschmiedia-pendula-lauraceae-2">Beilschmiedia pendula (Lauraceae)</h2>
+<p>The regular grid I used is of 7200 (<span class="math inline">\(120 \times 60\)</span>) points. Again, similar to the redwood saplings, <span class="math inline">\(\hat{F}\)</span> lies below the lower envelope for the most part. This suggests that CSR may be rejected, and this is an aggregated pattern.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="bei_F.jpg" class="img-fluid"></p>
+</div>
+</div>
+</section>
+</section>
+<section id="quadrat-counts" class="level1">
+<h1>Quadrat counts</h1>
+<section id="japanese-black-pines-3" class="level2">
+<h2 class="anchored" data-anchor-id="japanese-black-pines-3">Japanese black pines</h2>
+<p>For the data set of Japanese black pine saplings, we may use a <span class="math inline">\(3 \times 3\)</span> grid to ensure that the expected frequencies are at least 5. Below is the observation:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">quadratcount</span>(japanesepines, <span class="at">nx =</span> <span class="dv">3</span>, <span class="at">ny =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>               x
+y               [0,0.333) [0.333,0.667) [0.667,1]
+  [0.667,1]             6            15         7
+  [0.333,0.667)        10             4         3
+  [0,0.333)             4             8         8</code></pre>
+</div>
+</div>
+<p>To perform the <span class="math inline">\(\chi^2\)</span> test, we may employ the <code>quadrat.test</code> function:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">quadrat.test</span>(japanesepines, <span class="at">nx=</span><span class="dv">3</span>, <span class="at">ny=</span><span class="dv">3</span>, <span class="at">alternative=</span><span class="st">'clustered'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Chi-squared test of CSR using quadrat counts
+
+data:  japanesepines
+X2 = 15.169, df = 8, p-value = 0.05594
+alternative hypothesis: clustered
+
+Quadrats: 3 by 3 grid of tiles</code></pre>
+</div>
+</div>
+<p>Here we observe that the one-sided p-value is about 0.06, so evidence against CSR is weak.</p>
+</section>
+<section id="redwood-3" class="level2">
+<h2 class="anchored" data-anchor-id="redwood-3">Redwood</h2>
+<p>Again we use a <span class="math inline">\(3 \times 3\)</span> grid for this dataset to keep the expected counts over 5.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">quadratcount</span>(redwood3, <span class="at">nx =</span> <span class="dv">3</span>, <span class="at">ny =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                 x
+y                 [0,0.333) [0.333,0.667) [0.667,1]
+  [-0.333,0]              0             6        13
+  [-0.667,-0.333)        13             8         2
+  [-1,-0.667)             5             9         6</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">quadrat.test</span>(redwood3, <span class="at">nx=</span><span class="dv">3</span>, <span class="at">ny=</span><span class="dv">3</span>, <span class="at">alternative=</span><span class="st">'clustered'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Chi-squared test of CSR using quadrat counts
+
+data:  redwood3
+X2 = 22.774, df = 8, p-value = 0.003667
+alternative hypothesis: clustered
+
+Quadrats: 3 by 3 grid of tiles</code></pre>
+</div>
+</div>
+<p>The <span class="math inline">\(X^2\)</span> value of 22.77 is highly significant (p-value of 0.0037), leading to rejection of CSR. If we try to use quadrats of different sizes:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">quadrat.test</span>(redwood3, <span class="at">nx=</span><span class="dv">4</span>, <span class="at">ny=</span><span class="dv">4</span>, <span class="at">alternative=</span><span class="st">'clustered'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Some expected counts are small; chi^2 approximation may be inaccurate</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Chi-squared test of CSR using quadrat counts
+
+data:  redwood3
+X2 = 38.129, df = 15, p-value = 0.0008635
+alternative hypothesis: clustered
+
+Quadrats: 4 by 4 grid of tiles</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">quadrat.test</span>(redwood3, <span class="at">nx=</span><span class="dv">2</span>, <span class="at">ny=</span><span class="dv">2</span>, <span class="at">alternative=</span><span class="st">'clustered'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Chi-squared test of CSR using quadrat counts
+
+data:  redwood3
+X2 = 5.2258, df = 3, p-value = 0.156
+alternative hypothesis: clustered
+
+Quadrats: 2 by 2 grid of tiles</code></pre>
+</div>
+</div>
+<p>We see that the one-sided p-value for <span class="math inline">\(4 \times 4\)</span> is about 0.0002, also leading to rejection of CSR. However the p-value for <span class="math inline">\(2 \times 2\)</span> is 0.089. It is apparent that using different-sized quadrats may lead to different conclusions, and smaller-sized quadrats give stronger rejection of CSR.</p>
+</section>
+<section id="cells-3" class="level2">
+<h2 class="anchored" data-anchor-id="cells-3">Cells</h2>
+<p>We will test on the data using the 3 different-sized quadrats mentioned for the redwood data. Here is the <span class="math inline">\(3 \times 3\)</span> quadrat counts for reference:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">quadratcount</span>(cells, <span class="at">nx =</span> <span class="dv">3</span>, <span class="at">ny =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>               x
+y               [0,0.333) [0.333,0.667) [0.667,1]
+  [0.667,1]             3             6         3
+  [0.333,0.667)         4             7         6
+  [0,0.333)             3             6         4</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">quadrat.test</span>(cells, <span class="at">nx=</span><span class="dv">4</span>, <span class="at">ny=</span><span class="dv">4</span>, <span class="at">alternative=</span><span class="st">'regular'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Some expected counts are small; chi^2 approximation may be inaccurate</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Chi-squared test of CSR using quadrat counts
+
+data:  cells
+X2 = 2.9524, df = 15, p-value = 0.0003641
+alternative hypothesis: regular
+
+Quadrats: 4 by 4 grid of tiles</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">quadrat.test</span>(cells, <span class="at">nx=</span><span class="dv">3</span>, <span class="at">ny=</span><span class="dv">3</span>, <span class="at">alternative=</span><span class="st">'regular'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Some expected counts are small; chi^2 approximation may be inaccurate</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Chi-squared test of CSR using quadrat counts
+
+data:  cells
+X2 = 4.2857, df = 8, p-value = 0.1695
+alternative hypothesis: regular
+
+Quadrats: 3 by 3 grid of tiles</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">quadrat.test</span>(cells, <span class="at">nx=</span><span class="dv">2</span>, <span class="at">ny=</span><span class="dv">2</span>, <span class="at">alternative=</span><span class="st">'regular'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Chi-squared test of CSR using quadrat counts
+
+data:  cells
+X2 = 0.47619, df = 3, p-value = 0.07591
+alternative hypothesis: regular
+
+Quadrats: 2 by 2 grid of tiles</code></pre>
+</div>
+</div>
+<p>Since we have established that the cells data is a regular pattern, we may evaluate the p-value as <span class="math inline">\(P(\chi^2 &lt; X^2)\)</span> instead.</p>
+<p>The p-values defined this way for <span class="math inline">\(2 \times 2, 3 \times 3, 4 \times 4\)</span> grids are 0.076, 0.17, 0.0004 respectively. This shows that the observed values of <span class="math inline">\(X^2\)</span> are below expectation in all of them, and at a significance level of 0.1 we may reject CSR except for the <span class="math inline">\(3 \times 3\)</span> grid. The failure in rejection for this grid and the large significance level suggests that this test is weak against regular patterns.</p>
+</section>
+<section id="beilschmiedia-pendula-lauraceae-3" class="level2">
+<h2 class="anchored" data-anchor-id="beilschmiedia-pendula-lauraceae-3">Beilschmiedia pendula (Lauraceae)</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">quadrat.test</span>(bei, <span class="at">nx=</span><span class="dv">38</span>, <span class="at">ny=</span><span class="dv">19</span>, <span class="at">alternative=</span><span class="st">'clustered'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Some expected counts are small; chi^2 approximation may be inaccurate</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Chi-squared test of CSR using quadrat counts
+
+data:  bei
+X2 = 8605.9, df = 721, p-value &lt; 2.2e-16
+alternative hypothesis: clustered
+
+Quadrats: 38 by 19 grid of tiles</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">quadrat.test</span>(bei, <span class="at">nx=</span><span class="dv">37</span>, <span class="at">ny=</span><span class="dv">19</span>, <span class="at">alternative=</span><span class="st">'clustered'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Chi-squared test of CSR using quadrat counts
+
+data:  bei
+X2 = 9397.2, df = 702, p-value &lt; 2.2e-16
+alternative hypothesis: clustered
+
+Quadrats: 37 by 19 grid of tiles</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">quadrat.test</span>(bei, <span class="at">nx=</span><span class="dv">38</span>, <span class="at">ny=</span><span class="dv">18</span>, <span class="at">alternative=</span><span class="st">'clustered'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Chi-squared test of CSR using quadrat counts
+
+data:  bei
+X2 = 8349.7, df = 683, p-value &lt; 2.2e-16
+alternative hypothesis: clustered
+
+Quadrats: 38 by 18 grid of tiles</code></pre>
+</div>
+</div>
+<p>I have performed tests using <span class="math inline">\(38 \times 19\)</span>, <span class="math inline">\(37 \times 19\)</span> and <span class="math inline">\(38 \times 18\)</span>, which give expected counts of around 5. All of the p-values obtained are very small, so there is strong evidence for rejection of CSR.</p>
+<p>It is evident that CSR would be rejected for Beilschmiedia Pendula, using all the methods mentioned above. Indeed, the sampling region has elevations and swamp areas, which make the distribution of these trees an inhomogeneous process.</p>
+
+
+
+</section>
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-Bartlett" class="csl-entry" role="listitem">
+Bartlett, M. S. 1964. <span>“The Spectral Analysis of Two-Dimensional Point Processes.”</span> <em>Biometrika</em> 52: 299–311. <a href="https://doi.org/10.1093/biomet/51.3-4.299">https://doi.org/10.1093/biomet/51.3-4.299</a>.
+</div>
+<div id="ref-Besag" class="csl-entry" role="listitem">
+Besag, Julian, and Peter J. Diggle. 1977. <span>“<span class="nocase">Simple Monte Carlo Tests for Spatial Pattern</span>.”</span> <em>Journal of the Royal Statistical Society. Series C (Applied Statistics)</em> 26 (3): 327–33. <a href="https://doi.org/10.2307/2346974">https://doi.org/10.2307/2346974</a>.
+</div>
+<div id="ref-CHF" class="csl-entry" role="listitem">
+Condit, Hubbell, R., and R. B. Foster. 1996. <span>“Changes in Tree Species Abundance in a Neotropical Forest: Impact of Climate Change.”</span> <em>Journal of Tropical Ecology</em> 12: 231–56. <a href="https://doi.org/10.1017/S0266467400009433">https://doi.org/10.1017/S0266467400009433</a>.
+</div>
+<div id="ref-Condit" class="csl-entry" role="listitem">
+Condit, R. 1998. <em>Tropical Forest Census Plots</em>. Springer-Verlag, Berlin; R.G. Landes Company, Georgetown, Texas.
+</div>
+<div id="ref-HF" class="csl-entry" role="listitem">
+Hubbell, S. P, and R. B. Foster. 1983. <em>Diversity of Canopy Trees in a Neotropical Forest and Implications for Conservation</em>. Edited by T. C. Whitmore, A. C. Chadwick, and A. C. Sutton. The British Ecological Society.
+</div>
+<div id="ref-Numata" class="csl-entry" role="listitem">
+Numata, M. 1961. <span>“Forest Vegetation in the Vicinity of Choshi. Coastal Flora and Vegetation at Choshi, Chiba Prefecture, IV.”</span> <em>Bulletin of Choshi Marine Laboratory, Chiba University</em> 3: 28–48.
+</div>
+<div id="ref-MSP" class="csl-entry" role="listitem">
+Ripley, B. D. 1977. <span>“Modelling Spatial Patterns.”</span> <em>Journal of the Royal Statistical Society, Series B</em> 39: 172–212. <a href="https://doi.org/10.1111/j.2517-6161.1977.tb01615.x">https://doi.org/10.1111/j.2517-6161.1977.tb01615.x</a>.
+</div>
+<div id="ref-Strauss" class="csl-entry" role="listitem">
+Strauss, D. J. 1975. <span>“A Model for Clustering.”</span> <em>Biometrika</em> 62: 467–75. <a href="https://doi.org/10.1093/biomet/62.2.467">https://doi.org/10.1093/biomet/62.2.467</a>.
+</div>
+</div></section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

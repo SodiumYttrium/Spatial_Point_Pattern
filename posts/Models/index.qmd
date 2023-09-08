@@ -1,0 +1,150 @@
+---
+title: "Various Models for Point Patterns"
+author: "Natalie Young"
+date: "2023-09-04"
+categories: [news, analysis]
+bibliography: ../../references.bib
+link-citations: TRUE
+draft: true
+---
+The last topic on this project will be about different models for point patterns,
+including:
+
+- Contagious distributions
+- Poisson cluster processes
+- Inhomogeneous Poisson processes
+- Cox processes
+
+# Contagious distributions
+The term was first used by Neyman [@Neyman] to describe discrete distributions that
+exhibits contagious or clustering behaviour. Neyman proposed a Poisson process of egg-
+masses. Larvae hatch from these eggs, and then move to positions relative to
+the eggs according to a bivariate distribution.
+
+Suppose the number of egg clusters is $M$, which follows a Poisson process of
+intensity $\rho$, and each cluster produces a random number $S$ of offspring (larvae).
+Therefore $M$ follows a Poisson distribution with mean $\rho |A|$. The number of
+larvae in region $A$ is $N(A) = S_1 + \dots + S_M$. If the probability generating
+function (pgf) of $S$ is $\pi_s(z)$, the pgf for $N(A)$ is:
+$$
+\pi(z; A) = exp[-\rho |A| \{1-\pi_s(z)\}]
+$$
+Neyman's Type A distribution is obtained by setting $\pi_s(z) = exp[-\mu(1-z)]$.
+
+Now let the number of egg masses per unit area follow a Poisson process of mean $k\rho$,
+where $k$ also follows a Poisson distribution with a known mean. In this case, we get a
+*mixed*, or *compound* Poisson distribution. The number of larvae per unit area 
+still follows a Neyman's Type A distribution.
+
+However according to Evans [@Evans], plant quadrat count data are very well fitted to
+Neyman's Type A distribution, but not insect counts. Instead, insect count data are
+fitted by the negative binomial distribution. This is possibility due to greater
+competition and overcrowding in plants.
+
+The negative binomial distribution is obtained when $S$ has a logarithmic series
+distribution with $\pi_s(z) = 1 - log\{1+\beta(1-z)\}/log(1+\beta)$ for some $\beta > 0$.
+It can be derived as a *compounded*, or *mixed* Poisson distribution, in which the parameter
+is determined by random sampling from a gamma distribution.
+
+# Poisson cluster processes
+Poisson cluster processes follow 3 postulates:
+
+- Parent events follow a Poisson process with intensity $\rho$.
+- $S_i$, the number of offspring that the $i$th parent produces, are independent and identically
+distributed, with probability distribution $p_s: s = 0, 1, \dots$
+- The positions of the offspring relative to the parents are also independent and identically
+distributed with a bivariate pdf $h$.
+
+Let the  pdf of the vector difference between positions of 2 offspring with the same parent be:
+$$
+h_2(x) = \int h(x)h(x-y)dx
+$$
+And denote the corresponding cdf as $H_2(x)$. For an arbitrary event in a cluster of
+size $S$, the expected number of other events from the same cluster located within
+distance $t$ is $(S-1)H_2(t)$. The probability distribution of the cluster size of the
+arbitrary event is obtained by length-biased sampling from the cluster size distribution,
+$p(s)$: We get $p*(s) = sp(s)/\mu$, where $\mu = E(S)$. Taking the average, we get that
+the expected number of related events within distance $t$ is $E[S(S-1)]H_2(t)/\mu$.
+
+For unrelated events, since they are assumed to be located independently of the parent
+event, the expected number of unrelated events within distance $t$ of the arbitrary event
+is $\lambda \pi t^2$. Summing up the formulae for both related and unrelated events,
+we get:
+$$
+\lambda K(t) = \lambda \pi t^2 + E[S(S-1)]H_2(t)/\mu
+$$
+Dividing by $\lambda = \rho \mu$, we obtain the K-function:
+$$
+K(t) = \pi t^2 + E[S(S-1)]H_2(t)/(\rho \mu ^2)
+$$
+As $t \rightarrow \infty$, $K(t) - \pi t^2$ tends to a constant, $E[S(S-1)]/(\rho \mu^2)$.
+
+# Inhomogeneous Poisson processes
+The 2 main properties for an inhomogeneous Poisson process are:
+
+- $N(A)$ has a Poisson distribution with mean $\int_A \lambda(x) dx$.
+- Given there are $n$ events in region $A$, they are an independent random sample of
+a distribution on $A$ with a pdf proportional to the rate, $\lambda(x)$.
+
+By having the intensity as a function of spatial location, covariates may be introduced.
+Diggle has given an example: suppose the locations of a species of tree depends on the
+elavation of the ground. Then a possible intensity function may be $\lambda(x) =$
+$exp(\alpha + \beta z(x))$, where $z(x)$ denotes the elavation at location $x$.
+
+In ecology, species presence-only data may be modelled with inhomogeneous Poisson processes.
+To account for sampling bias and detection errors, the data should be treated as a thinned data. [@IPP1]
+We assume that the expected occurrences of in the region $A$ is a Poisson random variable
+with mean $\mu(A) = \int_A \lambda(s) ds$. [@Dorazio] $\lambda(s)$ is formulated as
+a log-linear function with unknown parameters $\beta$ and location-specific covariates $x(s)$
+(such as elevation and temperature). We obtain a formula of the form:
+$$
+log(\lambda(s)) = \beta'x(s) = \beta_0 + \displaystyle \sum_{j=1}^l \beta_j x_j(s)
+$$
+Assuming an individual is present at location $s$. The probability of it being detected is $b(s)$, where:
+$$
+logit(b(s)) = \alpha' w(s) = \alpha_0 + \displaystyle \sum_{j=1}^g \alpha_j w_j(s)
+$$
+where $w(s)$ are location-specific covariates (such as distance to a road and populaধon
+centres).
+
+The likelihood function for estimating $\alpha$ and $\beta$ is:
+$$
+L(\beta, \alpha) = exp(-\int_A \lambda(s) b(s) ds) \displaystyle \prod_{i=1}^m \lambda(s_i)b(s_i)
+$$
+
+# Cox processes
+The logic behind using the Poisson cluster process is that related events may cluster.
+Another reason for aggregation might be environmental heterogeneity, which we account for
+using the inhomogeneous Poisson process. However, this environmental heterogeneity itself
+might be stochastic. A Poisson process with stochastic intensity functions is called a *Cox process*.
+
+A spatial Cox process can be defined by the following postulates:
+
+- $\{\Lambda(x): x \in \mathbb{R}^2 \}$ is a non-negative-valued stochastic process.
+- Conditional on $\{\Lambda(x) = \lambda(x): x \in \mathbb{R}^2 \}$, the event form an
+inhomogeneous Poisson process with intensity function $\lambda(x)$.
+
+A Cox process is stationary if and only if the intensity process $\Lambda(x)$ is stationary.
+In this case, the intensity for the Cox process is obtained from taking expectation of the
+intensity process: $\lambda = E[\Lambda(x)]$.
+
+Given $\{\Lambda(x)\}$, the conditional intensity of a pair of events at locations $x$ and $y$
+respectively, is $\Lambda(x)\Lambda(y)$. Therefore $\lambda_2(x,y) = E[\Lambda(x)\Lambda(y)]$.
+In the stationary, isotropic case, this can be written as $\lambda_2(t) = \lambda^2 + \gamma(t)$,
+where $t = ||x-y||$ and $\gamma(t) = Cov\{\Lambda(x), \Lambda(y)\}$.
+
+According to Kingman [@Kingman], we can use Cox processes to model for a reproducing population as well.
+Denote $G_n$ as the point process that generates the locations, $X_i$, of individuals in the $n$th
+generation. Suppose reproduction obeys the following rules:
+
+- For a parent at location $x_i$, the number of offspring produced is a Poisson random variable
+with mean $\mu_i = \mu_i(G_n)$
+- The offspring's locations relative to the parent follows a bivariate pdf and are independent from each other.
+
+These rules are similar to the Poisson cluster process, but allow $\mu_i$ to depend on
+the configuration of the parents. $G_{n+1}$ is thus the process defining the locations of the
+offspring. It is a Cox process defined by:
+$$
+\Lambda(x) = \displaystyle \sum_{i=1}^\infty \mu_i (G_n) h(x-x_i)
+$$
+where $x_i$ are events of the $n$th generation.

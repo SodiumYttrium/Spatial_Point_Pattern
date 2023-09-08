@@ -66,12 +66,3 @@ $\chi^2$ goodness-of-fit tests. According to
 Bartlett, Besag and Diggle, there was insufficient evidence to reject the null hypothesis
 of CSR. However, there was a dependence between inter-tree measurements with a common end-point
 which may invalidate the obvious conclusion.
-
-<!-- Simple Monte Carlo Tests for Spatial Pattern -->
-<!-- Julian Besag, Peter J. Diggle -->
-<!-- Journal of the Royal Statistical Society. Series C (Applied Statistics), Vol. 26, No. 3 (1977), pp. 327-333 (7 pages) -->
-<!-- https://doi.org/10.2307/2346974 -->
-<!-- . -->
-
-<!-- https://www.jstor.org/stable/2346974 -->
-<!-- ![](thumbnail.jpg) -->

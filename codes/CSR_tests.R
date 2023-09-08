@@ -1,5 +1,5 @@
 library(spatstat)
-library(attention)
+# library(attention)
 
 jpp <- japanesepines
 
@@ -36,7 +36,7 @@ for (i in 1:99) {
     pdmat[i, which(dist == t)] <- sum(pdsvec <= t)
   }
 }
-ulist <- RowMax(t(pdmat))
+ulist <- apply(pdmat, 2, max, simplify = TRUE) # RowMax(t(pdmat))
 llist <-apply(pdmat, 2, min, simplify = TRUE)
 U <- lapply(ulist, function(t) t/((n*(n-1))/2))
 L <- lapply(llist, function(t) t/((n*(n-1))/2))
@@ -57,31 +57,72 @@ for (i in 1:65) {
 A <- 1 # I assume the area is 1
 G  = function(y){1 - (1 - pi*y^2/A)^(n-1)}
 Ghat = function(y){sum(Y <= y)/n}
+
+dist <- seq(from = 0, to = 0.54, by = 0.01)
 G_apply <- lapply(dist, G)
 Ghat_apply <- lapply(dist, Ghat)
 
 gpdmat <- matrix(nrow = 99, ncol = length(dist))
+
 for (i in 1:99) {
+  gpdsvec <- vector("list", length = 65)
   gpts <- runifpoint(n, win=window(jpp))
   gpds <- pairdist(gpts, periodic=FALSE, method="C", squared=FALSE, metric=NULL)
-  gpdsvec[[i]] <- apply(gpds[row(gpds)!=col(gpds)], 2, min, simplify = TRUE)
+  diag(gpds) <- diag(gpds) + 1000
+  # gpdsvec[[i]] <- apply(gpds[row(gpds)!=col(gpds)], 2, min, simplify = TRUE)
+  gpdsvec[[i]] <- apply(gpds, 2, min, simplify = TRUE)
+  # add big num to diagonal, take min
   for (y in dist) {
     gpdmat[i, which(dist == y)] <- sum(unlist(gpdsvec) <= y)
   }
 }
-gulist <- RowMax(t(gpdmat))
+gulist <- apply(gpdmat, 2, max, simplify = TRUE) # RowMax(t(gpdmat))
 gllist <-apply(gpdmat, 2, min, simplify = TRUE)
-gU <- lapply(gulist, function(t) t/((n*(n-1))/2))
-gL <- lapply(gllist, function(t) t/((n*(n-1))/2))
+gU <- lapply(gulist, function(t) t/n)
+gL <- lapply(gllist, function(t) t/n)
 
-plot(G_apply, Ghat_apply, col='green', type='p', xlim=c(0,1))
+plot(G_apply, Ghat_apply, col='green', type='l', xlim=c(0,1))
 lines(G_apply, gU, col='red')
 lines(G_apply, gL, col='cyan')
 abline(0, 1, col='blue')
 
 # Point to nearest event distances
 
-plot(Fest(jpp))
+# plot(Fest(jpp))
+F <- function(z){1-exp(-pi*n*z^2/A)}
+
+x_coords <- seq(from = 0, to = 1, by = 1/15)
+y_coords <- seq(from = 0, to = 1, by = 1/15)
+jpp_grid <- expand.grid(x = x_coords, y = y_coords)
+jpp_grid <- as.ppp(jpp_grid, W = owin(c(0, 1), c(0, 1)))
+
+dpdist <- nncross(jpp_grid, jpp, what='dist')
+
+dist <- seq(from = 0, to = 0.2, by = 0.005)
+
+Fhat <- function(z){sum(dpdist <= z)/jpp_grid$n}
+
+F_apply <- lapply(dist, F)
+Fhat_apply <- lapply(dist, Fhat)
+
+fpdmat <- matrix(nrow = 99, ncol = length(dist))
+for (i in 1:99) {
+  fpts <- runifpoint(n, win=window(jpp))
+  fpds <- nncross(jpp_grid, fpts, what='dist')
+  for (t in dist) {
+    fpdmat[i, which(dist == t)] <- sum(fpds <= t)
+  }
+}
+
+fulist <- apply(fpdmat, 2, max, simplify = TRUE)
+fllist <-apply(fpdmat, 2, min, simplify = TRUE)
+fU <- lapply(fulist, function(t) t/jpp_grid$n)
+fL <- lapply(fllist, function(t) t/jpp_grid$n)
+
+plot(F_apply, Fhat_apply, col='green', type='l', xlim=c(0,1))
+lines(F_apply, fU, col='red')
+lines(F_apply, fL, col='cyan')
+abline(0, 1, col='blue')
 
 # Quadrat counts
 

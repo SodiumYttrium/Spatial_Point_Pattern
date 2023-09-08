@@ -150,7 +150,12 @@ ul.task-list li input[type="checkbox"] {
 
 
 <p>This week we will explore some theoretical summary descriptions of spatial point processes. First, we need to define some notations.</p>
-<p>E(<span class="math inline">\(X\)</span>) = expectation of a random variable <span class="math inline">\(X\)</span> <span class="math inline">\(N(A)\)</span> = number of events in the planar region <span class="math inline">\(A\)</span> <span class="math inline">\(N_j(A)\)</span> = number of type <span class="math inline">\(j\)</span> events in <span class="math inline">\(A\)</span> for a multivariate process <span class="math inline">\(|A|\)</span> = area of <span class="math inline">\(A\)</span> <span class="math inline">\(dx\)</span> = an infinitesimal region that contains the point <span class="math inline">\(x\)</span> <span class="math inline">\(\|x-y\|\)</span> = the Euclidean distance between the points <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span></p>
+<p><span class="math inline">\(E(X) =\)</span> expectation of a random variable <span class="math inline">\(X\)</span></p>
+<p><span class="math inline">\(N(A) =\)</span> number of events in the planar region <span class="math inline">\(A\)</span></p>
+<p><span class="math inline">\(N_j(A) =\)</span> number of type <span class="math inline">\(j\)</span> events in <span class="math inline">\(A\)</span> for a multivariate process</p>
+<p><span class="math inline">\(|A| =\)</span> area of <span class="math inline">\(A\)</span></p>
+<p><span class="math inline">\(dx =\)</span> an infinitesimal region that contains the point <span class="math inline">\(x\)</span></p>
+<p><span class="math inline">\(\|x-y\| =\)</span> the Euclidean distance between the points <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span></p>
 <section id="second-order-properties" class="level1">
 <h1>Second order properties</h1>
 <p>First-order properties are described by an intensity function, <span class="math display">\[
@@ -167,7 +172,42 @@ ul.task-list li input[type="checkbox"] {
 <h1>The K function</h1>
 <p>The K function also characterises second-order properties of a stationary, isotropic process. It is defined as the following: <span class="math display">\[
 K(t) = \frac{E[N_0(t)]}{\lambda}
-\]</span> where <span class="math inline">\(N_0(t)\)</span> is the number of other events taking place within distance <span class="math inline">\(t\)</span> of an arbitrary event. In order to link <span class="math inline">\(K(t)\)</span> and <span class="math inline">\(\lambda_2(t)\)</span>, we will assume that multiple events cannot occur at the same point, <span class="math inline">\(E[N(dx)] \sim P\{N(dx) = N(dy)=1\}\)</span>.</p>
+\]</span> where <span class="math inline">\(N_0(t)\)</span> is the number of other events taking place within distance <span class="math inline">\(t\)</span> of an arbitrary event. In order to link <span class="math inline">\(K(t)\)</span> and <span class="math inline">\(\lambda_2(t)\)</span>, we will assume that multiple events cannot occur at the same point. <span class="math inline">\(E[N(dx)] \sim P\{N(dx) = N(dy)=1\}\)</span>, due to ratio of both quantities tending to 1 as <span class="math inline">\(|dx| \rightarrow 0\)</span>. Under these conditions, <span class="math inline">\(E[N_0(t)]\)</span> can be computed by integrating the conditional intensity over the disc centering at the origin and radius <span class="math inline">\(t\)</span>: <span class="math display">\[
+\begin{align}
+  \lambda K(t) &amp;= \int_0^{2\pi} \int_0^t \lambda_c(x|o)xdxd\theta \\
+  &amp;= \frac{2\pi}{\lambda} \int_0^t \lambda_2(x)xdx
+\end{align}
+\]</span></p>
+<p>Rather than taking the exact locations of each event, sometimes we prefer to take counts in quadrats. The quadrat count distribution, <span class="math display">\[
+p_n(A) = P\{N(A)=n\}
+\]</span> provides a summary description of the process. Since <span class="math inline">\(A\)</span> is arbitrary, we can summarise the distribution by the first few moments and express them as functions of <span class="math inline">\(A\)</span>. In particular, <span class="math inline">\(E[N(A)]=\int_A \lambda(x)dx\)</span> reduces to <span class="math inline">\(\lambda |A|\)</span> for a stationary process.</p>
+<p>By orderliness, <span class="math display">\[
+\begin{align}
+E[N(A)^2] &amp;= E[\{\int_ANdx\}]^2 \\
+&amp;= E[\int_ANdx + \int_A \int_A NdxNdy] \\
+&amp;= \lambda|A| + \int_A \int_A\lambda_2(x-y)dxdy
+\end{align}
+\]</span> And we have: <span class="math display">\[
+Var\{N(A)\} = \int_A \int_A \lambda_2(x-y)dxdy + \lambda|A|(1-\lambda|A|)
+\]</span> # Multivariate processes As defined before, <span class="math inline">\(N_j(A)\)</span> is the number of type <span class="math inline">\(j\)</span> events in the planar region <span class="math inline">\(A\)</span>. If we assume stationarity, isotropy and orderliness, the first order intensities are constants: <span class="math display">\[
+\lambda_j = E[N_j(A)]/|A|
+\]</span> The second order intensities are: <span class="math display">\[
+\lambda_{ij}(t) = \lim_{|dx| \rightarrow 0\\ |dy| \rightarrow 0}
+\{\frac{E[N_i(dx)N_j(dy)]}{|dx||dy|}\}
+\]</span> And the K-function would be defined as follows: <span class="math display">\[
+K_{ij}(t) = \frac{E[N_{0ij}(t)]}{\lambda_j}
+\]</span> Note that <span class="math inline">\(\lambda_{ij}(t) = \lambda_{ji}(t)\)</span> and <span class="math inline">\(K_{ij}(t) = K_{ji}(t)\)</span>.</p>
+</section>
+<section id="independence-and-random-labelling" class="level1">
+<h1>Independence and random labelling</h1>
+<p>We might be interested in testing whether 2 different types of events have spatial association in a bivariate process. 2 of the possible hypotheses we could consider are:</p>
+<ol type="i">
+<li><p>Independence - the 2 types of events are generated by 2 independent univariate processes</p></li>
+<li><p>Random labelling - the 2 types of events can be obtained by labelling the events from a univariate process with independent Bernoulli trials.</p></li>
+</ol>
+<p>For 2 independent processes of 2 event types, <span class="math inline">\(K_{12}(t)=\pi t^2\)</span>. This follows from the fact that the expected number of type 2 events in a disc of radius <span class="math inline">\(t\)</span> centred around an arbitrary type 1 event, <span class="math inline">\(E[N_{012}(t)]=\lambda_2 \pi t^2\)</span>.</p>
+<p>As for any randomly labelled process, <span class="math inline">\(K_{11}(t)=K_{22}(t)=K_{12}(t)=K(t)\)</span>, the K-function for the unlabelled univariate process.</p>
+<p>Independence and random labelling are equivalent if and only if both types of events are Poisson processes.</p>
 
 
 </section>

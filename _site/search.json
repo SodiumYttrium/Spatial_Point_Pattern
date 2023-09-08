@@ -1,5 +1,33 @@
 [
   {
+    "objectID": "posts/Testing for CSR/index.html",
+    "href": "posts/Testing for CSR/index.html",
+    "title": "Testing for CSR",
+    "section": "",
+    "text": "Now we will investigate some CSR tests, with the help of the spatstat package in RStudio."
+  },
+  {
+    "objectID": "posts/Testing for CSR/index.html#monte-carlo-test",
+    "href": "posts/Testing for CSR/index.html#monte-carlo-test",
+    "title": "Testing for CSR",
+    "section": "Monte Carlo test",
+    "text": "Monte Carlo test\n2 ways to construct an exact Monte Carlo test for CSR are as below:\n\nChoose \\(t_0\\) and let \\(u_i = \\hat{H}_i(t_0)\\). The rank of \\(u_1\\) is a basis for the test as under CSR, all rankings of \\(u_1\\) are equally probable.\nDefine \\(u_i\\) to be a measure of variation between \\(\\hat{H}_i(t)\\) and \\(H(t)\\), e.g. \\(u_i = \\int \\{\\hat{H}_i(t)-H(t)\\}^2 \\space dt\\), then base the test on the rank of \\(u_1\\).\n\nFor (i), we would need to choose a sensible \\(t_0\\) for the problem. While (ii) is more objective, it may not be a powerful test for inter-event distances.\nFor a region A in which \\(H(t)\\) is unknown, we can replace it by: \\[\n\\bar{H}_i(t) = \\frac{1}{s-1}\\displaystyle \\sum_{j \\ne i}\\hat{H}_j(t)\n\\] While \\(u_i\\) under CSR is no longer independent, it still fulfills the requirement that all rankings of \\(u_1\\) are equi-probable, as they are inter-changeable. We can plot \\(U(t), \\space L(t)\\) and \\(\\hat{H}_1(t)\\) against \\(\\bar{H}_1(t)\\). Since \\(\\bar{H}_1(t)\\) only depends on simulations of CSR, it is an unbiased estimate of \\(H(t)\\)."
+  },
+  {
+    "objectID": "posts/Testing for CSR/index.html#monte-carlo-test-1",
+    "href": "posts/Testing for CSR/index.html#monte-carlo-test-1",
+    "title": "Testing for CSR",
+    "section": "Monte Carlo test",
+    "text": "Monte Carlo test\nPossible test statistics for the Monte Carlo test could be \\(\\bar{y}\\), the sample mean of the nearest distances, or \\[\nu_i = \\int \\{\\hat{G}_i(y)-\\bar{G}_i(y)\\}^2 \\space dy,\n\\] where \\[\n\\bar{G}_i(y) = \\frac{1}{s-1}  \\displaystyle\\sum_{j \\ne i} \\hat{G}_j(y)\n\\] An advantage of using \\(\\bar{y}\\) is that simulation is unnecessary. As shown by Donnelly(1978), \\(\\bar{y}\\) under CSR is Normally distributed, with mean and variance: \\[\nE(\\bar{y}) = 0.5(\\frac{n}{|A|})^{1/2} + \\frac{1}{n}(0.051+0.042n^{-1/2})P\n\\] and \\[\nVar(\\bar{y}) = 0.070n^{-2}|A|+0.037(n^{-5}|A|)^{1/2}P\n\\] where P is the perimeter of region A. Significantly small or large \\(\\bar{y}\\) suggests aggregation or regularity, respectively."
+  },
+  {
+    "objectID": "posts/Second moments and Nearest Neighbour Distribution/index.html",
+    "href": "posts/Second moments and Nearest Neighbour Distribution/index.html",
+    "title": "Second Moments and Nearest Neighbour Distribution",
+    "section": "",
+    "text": "This week we will explore some theoretical summary descriptions of spatial point processes. First, we need to define some notations.\n\\(E(X) =\\) expectation of a random variable \\(X\\)\n\\(N(A) =\\) number of events in the planar region \\(A\\)\n\\(N_j(A) =\\) number of type \\(j\\) events in \\(A\\) for a multivariate process\n\\(|A| =\\) area of \\(A\\)\n\\(dx =\\) an infinitesimal region that contains the point \\(x\\)\n\\(\\|x-y\\| =\\) the Euclidean distance between the points \\(x\\) and \\(y\\)\n\nSecond order properties\nFirst-order properties are described by an intensity function, \\[\n\\lambda (x) = \\lim_{|dx|\\rightarrow 0} \\{\\frac{E[N(dx)]}{|dx|}\\}\n\\] For a stationary process, i.e. a process with all properties invariant under translation, \\(\\lambda(x)\\) is a constant, representing the mean number of events per unit area.\nThe second-order intensity function is defined as, \\[\n\\lambda_2(x, y) = \\lim_{|dx|, |dy|\\rightarrow 0}\\{\\frac{E[N(dx)N(dy)]}{|dx||dy|}\\}\n\\] We also note that the conditional intensity is \\(\\lambda_c(x|y)=\\lambda_2(x, y)/\\lambda(y)\\), the intensity at point \\(x\\) given there is an event at point \\(y\\). If the process is stationary, \\(\\lambda_2(x, y) \\equiv \\lambda_2(x-y)\\). If the process is additionally isotropic, i.e. all process properties are invariant under rotation, we can reduce \\(\\lambda_2(x-y)\\) to \\(\\lambda_2(t)\\), with \\(t=\\|x-y\\|\\).\nThe pair correlation function is defined as \\(\\rho(t)=\\lambda_2(t)/\\lambda^2\\). For intensity-reweighted (second-order) stationary processes, \\[\n\\frac{\\lambda_2(x,y)}{\\lambda(x)\\lambda(y)} = \\rho(t)\n\\] only depends on \\(t=\\|x-y\\|\\).\n\n\nThe K function\nThe K function also characterises second-order properties of a stationary, isotropic process. It is defined as the following: \\[\nK(t) = \\frac{E[N_0(t)]}{\\lambda}\n\\] where \\(N_0(t)\\) is the number of other events taking place within distance \\(t\\) of an arbitrary event. In order to link \\(K(t)\\) and \\(\\lambda_2(t)\\), we will assume that multiple events cannot occur at the same point. \\(E[N(dx)] \\sim P\\{N(dx) = N(dy)=1\\}\\), due to ratio of both quantities tending to 1 as \\(|dx| \\rightarrow 0\\). Under these conditions, \\(E[N_0(t)]\\) can be computed by integrating the conditional intensity over the disc centering at the origin and radius \\(t\\): \\[\n\\begin{align}\n  \\lambda K(t) &= \\int_0^{2\\pi} \\int_0^t \\lambda_c(x|o)xdxd\\theta \\\\\n  &= \\frac{2\\pi}{\\lambda} \\int_0^t \\lambda_2(x)xdx\n\\end{align}\n\\]\nRather than taking the exact locations of each event, sometimes we prefer to take counts in quadrats. The quadrat count distribution, \\[\np_n(A) = P\\{N(A)=n\\}\n\\] provides a summary description of the process. Since \\(A\\) is arbitrary, we can summarise the distribution by the first few moments and express them as functions of \\(A\\). In particular, \\(E[N(A)]=\\int_A \\lambda(x)dx\\) reduces to \\(\\lambda |A|\\) for a stationary process.\nBy orderliness, \\[\n\\begin{align}\nE[N(A)^2] &= E[\\{\\int_ANdx\\}]^2 \\\\\n&= E[\\int_ANdx + \\int_A \\int_A NdxNdy] \\\\\n&= \\lambda|A| + \\int_A \\int_A\\lambda_2(x-y)dxdy\n\\end{align}\n\\] And we have: \\[\nVar\\{N(A)\\} = \\int_A \\int_A \\lambda_2(x-y)dxdy + \\lambda|A|(1-\\lambda|A|)\n\\] # Multivariate processes As defined before, \\(N_j(A)\\) is the number of type \\(j\\) events in the planar region \\(A\\). If we assume stationarity, isotropy and orderliness, the first order intensities are constants: \\[\n\\lambda_j = E[N_j(A)]/|A|\n\\] The second order intensities are: \\[\n\\lambda_{ij}(t) = \\lim_{|dx| \\rightarrow 0\\\\ |dy| \\rightarrow 0}\n\\{\\frac{E[N_i(dx)N_j(dy)]}{|dx||dy|}\\}\n\\] And the K-function would be defined as follows: \\[\nK_{ij}(t) = \\frac{E[N_{0ij}(t)]}{\\lambda_j}\n\\] Note that \\(\\lambda_{ij}(t) = \\lambda_{ji}(t)\\) and \\(K_{ij}(t) = K_{ji}(t)\\).\n\n\nIndependence and random labelling\nWe might be interested in testing whether 2 different types of events have spatial association in a bivariate process. 2 of the possible hypotheses we could consider are:\n\nIndependence - the 2 types of events are generated by 2 independent univariate processes\nRandom labelling - the 2 types of events can be obtained by labelling the events from a univariate process with independent Bernoulli trials.\n\nFor 2 independent processes of 2 event types, \\(K_{12}(t)=\\pi t^2\\). This follows from the fact that the expected number of type 2 events in a disc of radius \\(t\\) centred around an arbitrary type 1 event, \\(E[N_{012}(t)]=\\lambda_2 \\pi t^2\\).\nAs for any randomly labelled process, \\(K_{11}(t)=K_{22}(t)=K_{12}(t)=K(t)\\), the K-function for the unlabelled univariate process.\nIndependence and random labelling are equivalent if and only if both types of events are Poisson processes."
+  },
+  {
     "objectID": "posts/Introduction/index.html",
     "href": "posts/Introduction/index.html",
     "title": "Introduction",
@@ -28,17 +56,192 @@
     "text": "Monte Carlo Tests\nMonte Carlo tests were introduced by Barnard (1963). They are used when the underlying distribution of random variables is unknown, to estimate the parameters based on simulations.\nWe can use them to test for CSR (Besag and Diggle 1977), with the null hypothesis stating that events are uniformly and independently distributed across region A. One popular test statistic, proposed by Clarke and Evans (1954), is the sum of distances between each of the n events to its nearest neighbour. We denote this as \\(u_1\\). Relatively large values of \\(u_1\\) may indicate spatial regularity.\nAn alternative test statistic used by Bartlett (1964) was the distribution function of distances between 2 randomly chosen points on the given square. The observed frequencies of inter-tree distances were then compared with the expected values under CSR, using \\(\\chi^2\\) goodness-of-fit tests. According to Bartlett, Besag and Diggle, there was insufficient evidence to reject the null hypothesis of CSR. However, there was a dependence between inter-tree measurements with a common end-point which may invalidate the obvious conclusion."
   },
   {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About",
-    "section": "",
-    "text": "I am Natalie Young, an undergraduate Mathematics student at Imperial College London. I will be updating this blog weekly to record my research on spatial point process and its applications in Ecology, guided by Statistical Analysis of Spatial and Spatio-temporal Point Patterns by P. J. Diggle. (Diggle 2013)\nPoint process models are a stochastic model to describe the locations of localised events in space, time or both. In particular, we will apply it to the distribution of different tree species over a 50ha tropical rainforest site on Barro Colorado Island, Panama. The ecological data for this site is publicly available, courtesy of the Smithsonian Tropical Research Institute.\n\n\n\nReferences\n\nDiggle, Peter J. 2013. Statistical Analysis of Spatial and Spatio-Temporal Point Patterns, Third Edition. Hoboken : Taylor; Francis."
-  },
-  {
     "objectID": "index.html",
     "href": "index.html",
     "title": "UROP_blog",
     "section": "",
-    "text": "Introduction\n\n\n\n\n\n\n\nnews\n\n\n\n\n\n\n\n\n\n\n\nJul 13, 2023\n\n\nNatalie Young\n\n\n\n\n\n\nNo matching items"
+    "text": "Estimation of Second Order Properties\n\n\n\n\n\n\n\ncode\n\n\nanalysis\n\n\n\n\n\n\n\n\n\n\n\nAug 23, 2023\n\n\nNatalie Young\n\n\n\n\n\n\n  \n\n\n\n\nSimulations for CSR Tests\n\n\n\n\n\n\n\ncode\n\n\nanalysis\n\n\n\n\n\n\n\n\n\n\n\nJul 28, 2023\n\n\nNatalie Young\n\n\n\n\n\n\n  \n\n\n\n\nSecond Moments and Nearest Neighbour Distribution\n\n\n\n\n\n\n\nnews\n\n\nanalysis\n\n\n\n\n\n\n\n\n\n\n\nJul 27, 2023\n\n\nNatalie Young\n\n\n\n\n\n\n  \n\n\n\n\nTesting for CSR\n\n\n\n\n\n\n\nnews\n\n\nanalysis\n\n\n\n\n\n\n\n\n\n\n\nJul 22, 2023\n\n\nNatalie Young\n\n\n\n\n\n\n  \n\n\n\n\nIntroduction\n\n\n\n\n\n\n\nnews\n\n\n\n\n\n\n\n\n\n\n\nJul 13, 2023\n\n\nNatalie Young\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "I am Natalie Young, an undergraduate Mathematics student at Imperial College London. I will be updating this blog weekly to record my research on spatial point process and its applications in Ecology, guided by Statistical Analysis of Spatial and Spatio-temporal Point Patterns by P. J. Diggle. (Diggle 2013)\nPoint process models are a stochastic model to describe the locations of localised events in space, time or both. In particular, we will apply it to the distribution of different tree species over a 50ha tropical rainforest site on Barro Colorado Island, Panama. (H. Condit R. and Foster 2005; R. Condit 1998; Hubbell and Lao 1999)The ecological data for this site is publicly available, courtesy of the Smithsonian Tropical Research Institute.\n\n\n\nReferences\n\nCondit, Hubbell, R., and R. B. Foster. 2005. “Barro Colorado Forest Census Plot Data.” http://ctfs.si.edu/webatlas/datasets/bci.\n\n\nCondit, R. 1998. Tropical Forest Census Plots. Springer-Verlag, Berlin; R.G. Landes Company, Georgetown, Texas.\n\n\nDiggle, Peter J. 2013. Statistical Analysis of Spatial and Spatio-Temporal Point Patterns, Third Edition. Hoboken : Taylor; Francis.\n\n\nHubbell, R. B. Foster, S. P., and S. Loo de Lao. 1999. “Light Gap Disturbances, Recruitment Limitation, and Tree Diversity in a Neotropical Forest.” Science 283: 554–57. https://doi.org/10.1126/science.283.5401.554."
+  },
+  {
+    "objectID": "posts/Estimation of Second Order Properties/index.html",
+    "href": "posts/Estimation of Second Order Properties/index.html",
+    "title": "Estimation of Second Order Properties",
+    "section": "",
+    "text": "Recall the definition of the K-function: \\[\nK(t) = \\frac{E[N_0(t)]}{\\lambda}\n\\] In small samples, estimation of \\(K(t)\\) would be more straightforward than that of \\(\\lambda_2(t)\\) or \\(\\rho(t)\\). While \\(K(t)\\) and \\(\\lambda_2(t)\\) are both related to the distribution of inter-event distances, \\(K(t)\\) can be estimated without deciding how much to smooth the empirical distribution.\nSometimes we may use random thinning (i.e. retaining or discarding each event using mutually independent Bernoulli trials) to reduce our sample size, and \\(K(t)\\) is invariant under this process. This is due to the ratio of \\(E[N_0(t)]\\) and \\(\\lambda\\) being unchanged.\nAn obvious estimator for \\(\\lambda\\) is \\(\\hat{\\lambda} = n/|A|\\), the number of observed events divided by the area. As for \\(E[N_0(t)]\\), the expected number of further events within distance \\(t\\) of an arbitrary event, we can use the following estimator: \\[\n\\tilde{E}(t) = \\frac{1}{n} \\displaystyle \\sum_{i=1}^n \\sum_{j \\ne i} I(r_{ij} \\leq t)\n\\] where \\(I\\) is the indicator function and \\(r_{ij} = ||x_i - x_j||\\). However, this estimator is negatively biased due to edge-effects, where events outside of the observed region may interact with those within the region. In this case, some events that lie within distance \\(t\\) may be unobserved as they lie outside the region."
+  },
+  {
+    "objectID": "posts/Estimation of Second Order Properties/index.html#japanese-black-pines",
+    "href": "posts/Estimation of Second Order Properties/index.html#japanese-black-pines",
+    "title": "Estimation of Second Order Properties",
+    "section": "Japanese black pines",
+    "text": "Japanese black pines\n\n\n\n\n\nWe see that \\(\\hat{K}(t)\\) lies close to \\(K(t)\\), and remains inside the envelopes. CSR is evident, which agrees with our previous tests of CSR."
+  },
+  {
+    "objectID": "posts/Estimation of Second Order Properties/index.html#redwood",
+    "href": "posts/Estimation of Second Order Properties/index.html#redwood",
+    "title": "Estimation of Second Order Properties",
+    "section": "Redwood",
+    "text": "Redwood\n\n\n\n\n\nWith the majority proportion of \\(\\hat{K}(t)\\) lying above 2 standard errors of \\(K(t)\\), it is clear that the data is aggregated, since there are more further events expected around an arbitrary event compared to a homogeneous Poisson process."
+  },
+  {
+    "objectID": "posts/Estimation of Second Order Properties/index.html#cells",
+    "href": "posts/Estimation of Second Order Properties/index.html#cells",
+    "title": "Estimation of Second Order Properties",
+    "section": "Cells",
+    "text": "Cells\n\n\n\n\n\nFor distances under 0.15, the expected number of further events around an arbitrary event is less than under CSR. This is a typical behaviour of regular patterns, and this agrees with our previous tests of CSR."
+  },
+  {
+    "objectID": "posts/Estimation of Second Order Properties/index.html#beilschmiedia-pendula-lauraceae",
+    "href": "posts/Estimation of Second Order Properties/index.html#beilschmiedia-pendula-lauraceae",
+    "title": "Estimation of Second Order Properties",
+    "section": "Beilschmiedia pendula (Lauraceae)",
+    "text": "Beilschmiedia pendula (Lauraceae)\nSince the built-in function is not suitable for handling patterns with over 3000 data points, I am only performing the test on the top left corner of the region, which is a \\(100 \\times 100\\) square containing 136 points:\n\n\n\n\n\n\n\n\n\n\nThe clear excess of expected further events provides strong evidence against CSR. We have established from previous CSR tests that the pattern of all 3604 trees are aggregated just like the redwood saplings, and this subset behaves the same."
+  },
+  {
+    "objectID": "posts/Estimation of Second Order Properties/index.html#acalypha-diversifolia-cecropia-insignis",
+    "href": "posts/Estimation of Second Order Properties/index.html#acalypha-diversifolia-cecropia-insignis",
+    "title": "Estimation of Second Order Properties",
+    "section": "Acalypha diversifolia & Cecropia insignis",
+    "text": "Acalypha diversifolia & Cecropia insignis"
+  },
+  {
+    "objectID": "posts/Estimation of Second Order Properties/index.html#cecropia-insignis-cupania-seemannii",
+    "href": "posts/Estimation of Second Order Properties/index.html#cecropia-insignis-cupania-seemannii",
+    "title": "Estimation of Second Order Properties",
+    "section": "Cecropia insignis & Cupania seemannii",
+    "text": "Cecropia insignis & Cupania seemannii"
+  },
+  {
+    "objectID": "posts/Estimation of Second Order Properties/index.html#cupania-seemannii-acalypha-diversifolia",
+    "href": "posts/Estimation of Second Order Properties/index.html#cupania-seemannii-acalypha-diversifolia",
+    "title": "Estimation of Second Order Properties",
+    "section": "Cupania seemannii & Acalypha diversifolia",
+    "text": "Cupania seemannii & Acalypha diversifolia\n\n\n\n\n\nThe first 2 pairs of species exhibit strong aggregation, while the third pair exhibits regularity."
+  },
+  {
+    "objectID": "posts/Simulations for CSR tests/index.html",
+    "href": "posts/Simulations for CSR tests/index.html",
+    "title": "Simulations for CSR Tests",
+    "section": "",
+    "text": "This post will be a collection of simulations I made based on the materials from the post ‘Testing for CSR’. The data I will be using are:\nThe first 3 have been used for demonstration in Diggle’s book, and my plots indeed show similar results to Diggle’s."
+  },
+  {
+    "objectID": "posts/Simulations for CSR tests/index.html#japanese-black-pines",
+    "href": "posts/Simulations for CSR tests/index.html#japanese-black-pines",
+    "title": "Simulations for CSR Tests",
+    "section": "Japanese black pines",
+    "text": "Japanese black pines\nMy replication of Diggle’s plot on Japanese black pine saplings, using 99 simulations of CSR for the envelopes, affirms acceptance of CSR. This agrees with (Bartlett 1964) and (Besag and Diggle 1977), who used a \\(\\chi^2\\) test on a histogram of inter-event distances."
+  },
+  {
+    "objectID": "posts/Simulations for CSR tests/index.html#redwood",
+    "href": "posts/Simulations for CSR tests/index.html#redwood",
+    "title": "Simulations for CSR Tests",
+    "section": "Redwood",
+    "text": "Redwood\n\\(\\hat{H}_1(t)\\) is greater than \\(H(t)\\) throughout the range, especially for very small and very large values of \\(H(t)\\), where \\(\\hat{H}_1(t)\\) exceeds the upper envelope. The excess number of small values of \\(H(t)\\) may be explained by Strauss’ remark that a distance of 6 feet on the ground (\\(t \\approx 0.08\\)), was “very roughly the range at which a pair of seedlings could interact.”\nA formal test of significance based on the measure of the discrepancy between \\(\\hat{H}_1(t)\\) and \\(H(t)\\), however, might suggest acceptance of CSR with a significance level of 0.22, according to Diggle. Indeed, \\(\\hat{H}_1(t)\\) lies relatively close to \\(H(t)\\) throughout the range. This shows that observation of the EDF plot with the simulation envelopes may provide insights that formal tests of significance do not."
+  },
+  {
+    "objectID": "posts/Simulations for CSR tests/index.html#cells",
+    "href": "posts/Simulations for CSR tests/index.html#cells",
+    "title": "Simulations for CSR Tests",
+    "section": "Cells",
+    "text": "Cells\nAgain, a formal test of significance may suggest acceptance of CSR, with a significance level of 0.23. However with parts of the graph (especially at low values of \\(H(t)\\)) lying outside the simulation envelopes, it suggests otherwise. Note that for small values of \\(t\\), \\(\\hat{H}_1(t)=0\\), i.e. small inter-event distances are absent. This explains the regularity of the pattern. Also, for large values of \\(t\\), \\(\\hat{H}_1(t)\\) lies close to the upper envelope. Looking at the graph depicting the data, we can observe that there are no events present at the corners of the square. These empty spaces result in lack of large inter-event distances."
+  },
+  {
+    "objectID": "posts/Simulations for CSR tests/index.html#beilschmiedia-pendula-lauraceae",
+    "href": "posts/Simulations for CSR tests/index.html#beilschmiedia-pendula-lauraceae",
+    "title": "Simulations for CSR Tests",
+    "section": "Beilschmiedia pendula (Lauraceae)",
+    "text": "Beilschmiedia pendula (Lauraceae)\nClearly, with the excess of small inter-event distances and the deficit of larger inter-event distances, we have sufficient evidence to reject CSR. This is to be expected, as we see from the graph that events are clustered around certain areas, with large empty spaces near the middle part of the region and to the right."
+  },
+  {
+    "objectID": "posts/Simulations for CSR tests/index.html#japanese-black-pines-1",
+    "href": "posts/Simulations for CSR tests/index.html#japanese-black-pines-1",
+    "title": "Simulations for CSR Tests",
+    "section": "Japanese black pines",
+    "text": "Japanese black pines\nThis plot suggests acceptance of CSR. According to Diggle, a formal Monte Carlo test based on the squared difference between \\(\\hat{G}\\) and \\(\\bar{G}\\) arrives at the same conclusion with significance level 0.52."
+  },
+  {
+    "objectID": "posts/Simulations for CSR tests/index.html#redwood-1",
+    "href": "posts/Simulations for CSR tests/index.html#redwood-1",
+    "title": "Simulations for CSR Tests",
+    "section": "Redwood",
+    "text": "Redwood\nWith a large proportion of \\(\\hat{G}\\) lying above the upper envelope, there is strong evidence for rejecting CSR. This is supported by the Monte Carlo test, in which \\(u_1\\) is larger than all 99 simulated \\(u_j\\).\nThe excess of nearest neighbour distances is typical for an aggregated pattern like these redwood seedlings."
+  },
+  {
+    "objectID": "posts/Simulations for CSR tests/index.html#cells-1",
+    "href": "posts/Simulations for CSR tests/index.html#cells-1",
+    "title": "Simulations for CSR Tests",
+    "section": "Cells",
+    "text": "Cells\nAgain, there is strong evidence against CSR. The Monte Carlo test also gives a \\(u_1\\) that is comfortably larger than all the other \\(u_j\\). Note that there is a lack of small nearest neighbour distances, characteristic of regular patterns."
+  },
+  {
+    "objectID": "posts/Simulations for CSR tests/index.html#beilschmiedia-pendula-lauraceae-1",
+    "href": "posts/Simulations for CSR tests/index.html#beilschmiedia-pendula-lauraceae-1",
+    "title": "Simulations for CSR Tests",
+    "section": "Beilschmiedia pendula (Lauraceae)",
+    "text": "Beilschmiedia pendula (Lauraceae)\nSimilar to the behaviour of the redwood saplings, there is a large proportion of \\(\\hat{G}\\) above the upper envelope, so we may reject CSR."
+  },
+  {
+    "objectID": "posts/Simulations for CSR tests/index.html#japanese-black-pines-2",
+    "href": "posts/Simulations for CSR tests/index.html#japanese-black-pines-2",
+    "title": "Simulations for CSR Tests",
+    "section": "Japanese black pines",
+    "text": "Japanese black pines\nThis plot is obtained using a regular grid of 256 (\\(16 \\times 16\\)) points over the window. We see that \\(\\hat{F}\\) lies close to \\(F\\) throughout the range and between the envelopes. Just like our previous analysis of this data, we accept CSR."
+  },
+  {
+    "objectID": "posts/Simulations for CSR tests/index.html#redwood-2",
+    "href": "posts/Simulations for CSR tests/index.html#redwood-2",
+    "title": "Simulations for CSR Tests",
+    "section": "Redwood",
+    "text": "Redwood\nAgain, we obtain the plot using the regular pattern of 256 points. Clearly \\(\\hat{F}\\) lies below the lower envelope for most of the range, suggesting rejection of CSR. This is a typical behaviour of aggregated pattern.\nPerforming a Monte Carlo test based on the squared differences between \\(\\hat{F}\\) and \\(\\bar{F}\\) gives the same conclusion, with \\(u_1\\) larger than all 99 simulated \\(u_j\\)."
+  },
+  {
+    "objectID": "posts/Simulations for CSR tests/index.html#cells-2",
+    "href": "posts/Simulations for CSR tests/index.html#cells-2",
+    "title": "Simulations for CSR Tests",
+    "section": "Cells",
+    "text": "Cells\nThis time we use a regular grid of 196 (\\(14 \\times 14\\)) points. With a large proportion of the graph of \\(\\hat{F}\\) lying above the upper envelope, CSR is rejected. The Monte Carlo test agrees with this at the significant level of 0.02, according to Diggle."
+  },
+  {
+    "objectID": "posts/Simulations for CSR tests/index.html#beilschmiedia-pendula-lauraceae-2",
+    "href": "posts/Simulations for CSR tests/index.html#beilschmiedia-pendula-lauraceae-2",
+    "title": "Simulations for CSR Tests",
+    "section": "Beilschmiedia pendula (Lauraceae)",
+    "text": "Beilschmiedia pendula (Lauraceae)\nThe regular grid I used is of 7200 (\\(120 \\times 60\\)) points. Again, similar to the redwood saplings, \\(\\hat{F}\\) lies below the lower envelope for the most part. This suggests that CSR may be rejected, and this is an aggregated pattern."
+  },
+  {
+    "objectID": "posts/Simulations for CSR tests/index.html#japanese-black-pines-3",
+    "href": "posts/Simulations for CSR tests/index.html#japanese-black-pines-3",
+    "title": "Simulations for CSR Tests",
+    "section": "Japanese black pines",
+    "text": "Japanese black pines\nFor the data set of Japanese black pine saplings, we may use a \\(3 \\times 3\\) grid to ensure that the expected frequencies are at least 5. Below is the observation:\n\nquadratcount(japanesepines, nx = 3, ny = 3)\n\n               x\ny               [0,0.333) [0.333,0.667) [0.667,1]\n  [0.667,1]             6            15         7\n  [0.333,0.667)        10             4         3\n  [0,0.333)             4             8         8\n\n\nTo perform the \\(\\chi^2\\) test, we may employ the quadrat.test function:\n\nquadrat.test(japanesepines, nx=3, ny=3, alternative='clustered')\n\n\n    Chi-squared test of CSR using quadrat counts\n\ndata:  japanesepines\nX2 = 15.169, df = 8, p-value = 0.05594\nalternative hypothesis: clustered\n\nQuadrats: 3 by 3 grid of tiles\n\n\nHere we observe that the one-sided p-value is about 0.06, so evidence against CSR is weak."
+  },
+  {
+    "objectID": "posts/Simulations for CSR tests/index.html#redwood-3",
+    "href": "posts/Simulations for CSR tests/index.html#redwood-3",
+    "title": "Simulations for CSR Tests",
+    "section": "Redwood",
+    "text": "Redwood\nAgain we use a \\(3 \\times 3\\) grid for this dataset to keep the expected counts over 5.\n\nquadratcount(redwood3, nx = 3, ny = 3)\n\n                 x\ny                 [0,0.333) [0.333,0.667) [0.667,1]\n  [-0.333,0]              0             6        13\n  [-0.667,-0.333)        13             8         2\n  [-1,-0.667)             5             9         6\n\n\n\nquadrat.test(redwood3, nx=3, ny=3, alternative='clustered')\n\n\n    Chi-squared test of CSR using quadrat counts\n\ndata:  redwood3\nX2 = 22.774, df = 8, p-value = 0.003667\nalternative hypothesis: clustered\n\nQuadrats: 3 by 3 grid of tiles\n\n\nThe \\(X^2\\) value of 22.77 is highly significant (p-value of 0.0037), leading to rejection of CSR. If we try to use quadrats of different sizes:\n\nquadrat.test(redwood3, nx=4, ny=4, alternative='clustered')\n\nWarning: Some expected counts are small; chi^2 approximation may be inaccurate\n\n\n\n    Chi-squared test of CSR using quadrat counts\n\ndata:  redwood3\nX2 = 38.129, df = 15, p-value = 0.0008635\nalternative hypothesis: clustered\n\nQuadrats: 4 by 4 grid of tiles\n\nquadrat.test(redwood3, nx=2, ny=2, alternative='clustered')\n\n\n    Chi-squared test of CSR using quadrat counts\n\ndata:  redwood3\nX2 = 5.2258, df = 3, p-value = 0.156\nalternative hypothesis: clustered\n\nQuadrats: 2 by 2 grid of tiles\n\n\nWe see that the one-sided p-value for \\(4 \\times 4\\) is about 0.0002, also leading to rejection of CSR. However the p-value for \\(2 \\times 2\\) is 0.089. It is apparent that using different-sized quadrats may lead to different conclusions, and smaller-sized quadrats give stronger rejection of CSR."
+  },
+  {
+    "objectID": "posts/Simulations for CSR tests/index.html#cells-3",
+    "href": "posts/Simulations for CSR tests/index.html#cells-3",
+    "title": "Simulations for CSR Tests",
+    "section": "Cells",
+    "text": "Cells\nWe will test on the data using the 3 different-sized quadrats mentioned for the redwood data. Here is the \\(3 \\times 3\\) quadrat counts for reference:\n\nquadratcount(cells, nx = 3, ny = 3)\n\n               x\ny               [0,0.333) [0.333,0.667) [0.667,1]\n  [0.667,1]             3             6         3\n  [0.333,0.667)         4             7         6\n  [0,0.333)             3             6         4\n\n\n\nquadrat.test(cells, nx=4, ny=4, alternative='regular')\n\nWarning: Some expected counts are small; chi^2 approximation may be inaccurate\n\n\n\n    Chi-squared test of CSR using quadrat counts\n\ndata:  cells\nX2 = 2.9524, df = 15, p-value = 0.0003641\nalternative hypothesis: regular\n\nQuadrats: 4 by 4 grid of tiles\n\nquadrat.test(cells, nx=3, ny=3, alternative='regular')\n\nWarning: Some expected counts are small; chi^2 approximation may be inaccurate\n\n\n\n    Chi-squared test of CSR using quadrat counts\n\ndata:  cells\nX2 = 4.2857, df = 8, p-value = 0.1695\nalternative hypothesis: regular\n\nQuadrats: 3 by 3 grid of tiles\n\nquadrat.test(cells, nx=2, ny=2, alternative='regular')\n\n\n    Chi-squared test of CSR using quadrat counts\n\ndata:  cells\nX2 = 0.47619, df = 3, p-value = 0.07591\nalternative hypothesis: regular\n\nQuadrats: 2 by 2 grid of tiles\n\n\nSince we have established that the cells data is a regular pattern, we may evaluate the p-value as \\(P(\\chi^2 &lt; X^2)\\) instead.\nThe p-values defined this way for \\(2 \\times 2, 3 \\times 3, 4 \\times 4\\) grids are 0.076, 0.17, 0.0004 respectively. This shows that the observed values of \\(X^2\\) are below expectation in all of them, and at a significance level of 0.1 we may reject CSR except for the \\(3 \\times 3\\) grid. The failure in rejection for this grid and the large significance level suggests that this test is weak against regular patterns."
+  },
+  {
+    "objectID": "posts/Simulations for CSR tests/index.html#beilschmiedia-pendula-lauraceae-3",
+    "href": "posts/Simulations for CSR tests/index.html#beilschmiedia-pendula-lauraceae-3",
+    "title": "Simulations for CSR Tests",
+    "section": "Beilschmiedia pendula (Lauraceae)",
+    "text": "Beilschmiedia pendula (Lauraceae)\n\nquadrat.test(bei, nx=38, ny=19, alternative='clustered')\n\nWarning: Some expected counts are small; chi^2 approximation may be inaccurate\n\n\n\n    Chi-squared test of CSR using quadrat counts\n\ndata:  bei\nX2 = 8605.9, df = 721, p-value &lt; 2.2e-16\nalternative hypothesis: clustered\n\nQuadrats: 38 by 19 grid of tiles\n\nquadrat.test(bei, nx=37, ny=19, alternative='clustered')\n\n\n    Chi-squared test of CSR using quadrat counts\n\ndata:  bei\nX2 = 9397.2, df = 702, p-value &lt; 2.2e-16\nalternative hypothesis: clustered\n\nQuadrats: 37 by 19 grid of tiles\n\nquadrat.test(bei, nx=38, ny=18, alternative='clustered')\n\n\n    Chi-squared test of CSR using quadrat counts\n\ndata:  bei\nX2 = 8349.7, df = 683, p-value &lt; 2.2e-16\nalternative hypothesis: clustered\n\nQuadrats: 38 by 18 grid of tiles\n\n\nI have performed tests using \\(38 \\times 19\\), \\(37 \\times 19\\) and \\(38 \\times 18\\), which give expected counts of around 5. All of the p-values obtained are very small, so there is strong evidence for rejection of CSR.\nIt is evident that CSR would be rejected for Beilschmiedia Pendula, using all the methods mentioned above. Indeed, the sampling region has elevations and swamp areas, which make the distribution of these trees an inhomogeneous process."
   }
 ]
