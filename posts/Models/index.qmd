@@ -5,9 +5,12 @@ date: "2023-09-04"
 categories: [news, analysis]
 bibliography: ../../references.bib
 link-citations: TRUE
-draft: true
+draft: false
+image: contdist.jpg
 ---
-The last topic on this project will be about different models for point patterns,
+Thumbnail credit: [@contdist]
+
+This topic will be about different models for point patterns,
 including:
 
 - Contagious distributions

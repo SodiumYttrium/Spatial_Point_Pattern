@@ -6,7 +6,11 @@ categories: [code, analysis]
 bibliography: ../../references.bib
 link-citations: TRUE
 draft: false
+image: bei.JPG
 ---
+
+Thumbnail credit: [@SPP]
+
 ```{r, message=FALSE, warning=FALSE, echo=FALSE}
 library(spatstat)
 ```

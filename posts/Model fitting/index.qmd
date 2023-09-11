@@ -1,0 +1,84 @@
+---
+title: "Model fitting"
+author: "Natalie Young"
+date: "2023-09-10"
+categories: [code, analysis]
+bibliography: ../../references.bib
+link-citations: TRUE
+draft: false
+image: bcitrees.jpg
+---
+
+Thumbnail credit: [@BCIphoto]
+
+To wrap up, I will evaluate the suitability of using an inhomogeneous Poisson process
+to model the 3 species from the Barro Colorado Island dataset. To do this, the built-in
+function `ppm` from `spatstat` would be helpful. Then the estimated pair correlation function (PCF) from the actual
+data will be plotted with the upper and lower envelopes of 99 simulations based on the
+fitted model for comparison. The PCF is associated with the rate of change of the K-function:
+$$
+\rho(r) = \frac{K'(r)}{2\pi r}
+$$
+And it should equal to 1 if the process is stationary ($K(r)=\pi r^2$). Using the PCF
+over the K-function could remove the effect of culmulativity in the K-function, allowing
+for clearer observation of the behaviour.
+
+```{r, message=FALSE, warning=FALSE, echo=FALSE, cache=TRUE}
+library(spatstat)
+library(data.table)
+
+W <- owin(c(0,1000),c(0,500))
+
+df <- fread("../../BCI_3specs.csv")
+bci <- ppp(df$x, df$y, window=W, marks=df$Latin)
+
+AD <- unmark(subset.ppp(bci, marks(bci) == "Acalypha diversifolia"))
+CI <- unmark(subset.ppp(bci, marks(bci) == "Cecropia insignis"))
+CS <- unmark(subset.ppp(bci, marks(bci) == "Cupania seemannii"))
+
+mfit <- function(data){
+  model <- ppm(data, trend=~ polynom(x, y, 2), interaction=Poisson(), correction="isotropic")
+  K <- Kest(data, var.approx = TRUE)
+  PCF <- pcfinhom(data)
+  Kmod <- Kmodel.ppm(model)
+  mat <- matrix(nrow = 99, ncol = length(PCF$r))
+  for (i in 1:99) {
+    sims <- simulate(model)
+    p <- pcfinhom(sims$`Simulation 1`)$iso
+    for (t in PCF$r) {
+      mat[i, which(PCF$r == t)] <- p[which(PCF$r == t)]
+    }
+  }
+  
+  ulist <- apply(mat, 2, max, simplify = TRUE)
+  llist <-apply(mat, 2, min, simplify = TRUE)
+  plot(PCF$r, PCF$iso, ylim=c(0,5), type='l', col='blue')
+  lines(PCF$r, ulist, ylim=c(0,5), type='l', col='red')
+  lines(PCF$r, llist, ylim=c(0,5), type='l', col='green')
+  legend(x='topright',c("data","upper envelope","lower envelope"),cex=.8, col=c("blue", "red", "green"),pch=c(1,2,3))
+}
+```
+
+# Acalypha diversifolia
+```{r, echo=FALSE, warning=FALSE, cache=TRUE}
+mfit(AD)
+```
+
+# Cecropia insignis
+```{r, echo=FALSE, warning=FALSE, cache=TRUE}
+mfit(CI)
+```
+
+# Cupania seemannii
+```{r, echo=FALSE, warning=FALSE, cache=TRUE}
+mfit(CS)
+```
+
+In all of the cases, the PCF of the data lies above the simulation envelopes for small
+distances, then drops below the envelopes for large distances. These suggest small distance
+aggregation. Since there are less pairs of events with larger inter-event distances,
+the variance for the K-function at these distances is large.
+
+It is apparent that the inhomogeneous Poisson process model is not a good fit for
+the data, and we would have to explore other models in order to better estimate
+the spread of these tree species at this location.

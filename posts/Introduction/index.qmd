@@ -6,7 +6,9 @@ categories: [news]
 bibliography: ../../references.bib
 link-citations: TRUE
 draft: false
+image: trees.jpg
 ---
+Thumbnail image credit: [@Trees]
 
 Welcome! This week I have reviewed some introductory materials to the topic of Spatial Point Patterns.
 Here is a summary of them.

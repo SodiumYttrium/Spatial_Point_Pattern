@@ -6,7 +6,9 @@ categories: [news, analysis]
 bibliography: ../../references.bib
 link-citations: TRUE
 draft: false
+image: edgecorr.PNG
 ---
+Thumbnail taken from Chapter 4 of the Diggle book: [@DiggleBook]
 
 This week we will explore some theoretical summary descriptions of
 spatial point processes. First, we need to define some notations.

@@ -6,7 +6,11 @@ categories: [code, analysis]
 bibliography: ../../references.bib
 link-citations: TRUE
 draft: false
+image: bci.jpg
 ---
+
+Thumbnail credit: [@BCIphoto]
+
 # Estimating the K-function
 Recall the definition of the K-function:
 $$

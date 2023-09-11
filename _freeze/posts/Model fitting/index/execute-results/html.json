@@ -1,0 +1,14 @@
+{
+  "hash": "5a7614cd21d871570228d066ca010860",
+  "result": {
+    "markdown": "---\ntitle: \"Model fitting\"\nauthor: \"Natalie Young\"\ndate: \"2023-09-10\"\ncategories: [code, analysis]\nbibliography: ../../references.bib\nlink-citations: TRUE\ndraft: true\n---\n\n\nTo wrap up, I will evaluate the suitability of using an inhomogeneous Poisson process\nto model the 3 species from the Barro Colorado Island dataset. To do this, the built-in\nfunction `ppm` from `spatstat` would be helpful. Then the estimated pair correlation function (PCF) from the actual\ndata will be plotted with the upper and lower envelopes of 99 simulations based on the\nfitted model for comparison. The PCF is associated with the rate of change of the K-function:\n$$\n\\rho(r) = \\frac{K'(r)}{2\\pi r}\n$$\nAnd it should equal to 1 if the process is stationary ($K(r)=\\pi r^2$). Using the PCF\nover the K-function could remove the effect of culmulativity in the K-function, allowing\nfor clearer observation of the behaviour.\n\n\n::: {.cell hash='index_cache/html/unnamed-chunk-1_d1c819e60e7a5a576e56aef54255dfec'}\n\n:::\n\n\n# Acalypha diversifolia\n\n::: {.cell hash='index_cache/html/unnamed-chunk-2_1c37504742fda73c579a2eee572ce3ab'}\n::: {.cell-output-display}\n![](index_files/figure-html/unnamed-chunk-2-1.png){width=672}\n:::\n:::\n\n\n# Cecropia insignis\n\n::: {.cell hash='index_cache/html/unnamed-chunk-3_00f86fec94f25560a2f531907cd38e5a'}\n::: {.cell-output-display}\n![](index_files/figure-html/unnamed-chunk-3-1.png){width=672}\n:::\n:::\n\n\n# Cupania seemannii\n\n::: {.cell hash='index_cache/html/unnamed-chunk-4_c20e3cb2c3eabcc8375d35e9016e22e8'}\n::: {.cell-output-display}\n![](index_files/figure-html/unnamed-chunk-4-1.png){width=672}\n:::\n:::\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}
