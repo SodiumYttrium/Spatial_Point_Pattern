@@ -228,6 +228,9 @@ lines(G_apply, gU, col='red')
 lines(G_apply, gL, col='cyan')
 legend(x=0,y=1,c("data","upper envelope", "lower envelope"),cex=.8,col=c("green","red", "cyan"),pch=c(1,2,3))
 
+# G on bei
+Gfunc(bei, seq(from = 0, to = 72, by = 1))
+
 # F function
 Ffunc <- function(data, x, y, dist){
   n <- data$n

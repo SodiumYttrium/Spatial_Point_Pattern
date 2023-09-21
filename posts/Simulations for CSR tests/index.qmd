@@ -7,9 +7,9 @@ bibliography: ../../references.bib
 link-citations: TRUE
 draft: false
 image: bei.JPG
+freeze: true
+description: "Collection of simulations of CSR testings. Thumbnail: [@SPP]"
 ---
-
-Thumbnail credit: [@SPP]
 
 ```{r, message=FALSE, warning=FALSE, echo=FALSE}
 library(spatstat)
@@ -128,7 +128,7 @@ as we see from the graph that events are clustered around certain areas, with la
 empty spaces near the middle part of the region and to the right.
 
 ```{r, echo=FALSE}
-knitr::include_graphics("bei_H.jpg")
+Hfunc(bei, seq(from = 0, to = 1100, by = 10))
 ```
 
 # Nearest neighbour distance
@@ -205,7 +205,7 @@ Gfunc(cells, seq(from = 0, to = 0.54, by = 0.01))
 Similar to the behaviour of the redwood saplings, there is a large proportion of
 $\hat{G}$ above the upper envelope, so we may reject CSR.
 ```{r, echo=FALSE}
-knitr::include_graphics("bei_G.jpg")
+Gfunc(bei, seq(from = 0, to = 72, by = 1))
 ```
 
 # Point to nearest event distances
@@ -285,7 +285,7 @@ the redwood saplings, $\hat{F}$ lies below the lower envelope for the most part.
 This suggests that CSR may be rejected, and this is an aggregated pattern.
 
 ```{r, echo=FALSE}
-knitr::include_graphics("bei_F.jpg")
+Ffunc(bei, 120, 60, seq(from = 0, to = 119, by = 1))
 ```
 
 # Quadrat counts

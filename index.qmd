@@ -1,5 +1,5 @@
 ---
-title: "UROP_blog"
+title: "UROP - Spatial Point Patterns"
 listing:
   contents: posts
   sort: "date desc"

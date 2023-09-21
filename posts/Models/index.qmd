@@ -7,8 +7,8 @@ bibliography: ../../references.bib
 link-citations: TRUE
 draft: false
 image: contdist.jpg
+description: "Various point pattern models. Thumbnail credit: [@contdist]"
 ---
-Thumbnail credit: [@contdist]
 
 This topic will be about different models for point patterns,
 including:

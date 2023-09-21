@@ -7,9 +7,8 @@ bibliography: ../../references.bib
 link-citations: TRUE
 draft: false
 image: bcitrees.jpg
+description: "Model fitting of BCI data. Thumbnail credit: [@BCIphoto]"
 ---
-
-Thumbnail credit: [@BCIphoto]
 
 To wrap up, I will evaluate the suitability of using an inhomogeneous Poisson process
 to model the 3 species from the Barro Colorado Island dataset. To do this, the built-in
@@ -20,7 +19,7 @@ $$
 \rho(r) = \frac{K'(r)}{2\pi r}
 $$
 And it should equal to 1 if the process is stationary ($K(r)=\pi r^2$). Using the PCF
-over the K-function could remove the effect of culmulativity in the K-function, allowing
+over the K-function could remove the effect of cumulation in the K-function, allowing
 for clearer observation of the behaviour.
 
 ```{r, message=FALSE, warning=FALSE, echo=FALSE, cache=TRUE}
