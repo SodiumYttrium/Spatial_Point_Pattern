@@ -73,6 +73,7 @@ mfit(CI)
 mfit(CS)
 ```
 
+
 In all of the cases, the PCF of the data lies above the simulation envelopes for small
 distances, then drops below the envelopes for large distances. These suggest small distance
 aggregation. Since there are less pairs of events with larger inter-event distances,
