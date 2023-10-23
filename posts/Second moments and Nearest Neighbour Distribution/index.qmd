@@ -1,7 +1,7 @@
 ---
 title: "Second Moments and Nearest Neighbour Distribution"
 author: "Natalie Young"
-date: "2023-07-27"
+date: "2023-07-28"
 categories: [news, analysis]
 bibliography: ../../references.bib
 link-citations: TRUE
